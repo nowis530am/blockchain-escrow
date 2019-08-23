@@ -125,7 +125,9 @@
       }
       .btn.btn-secondary{
         margin-right: 10px;
-
+      }
+      h4, h2{
+        display: inline;
       }
 
     </style>
@@ -190,6 +192,8 @@
         <h1>This is <b>PRODUCT DETAILS</b> page.</h1>
         This area will includes <strong>seller information, title, price, cart button, purchase button </strong>
       </div>
+
+      <!-- product thumbnail -->
       <div class="product-slider">
         <div id="carousel" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
@@ -210,14 +214,11 @@
                 <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="img/product_sample_4.jpg"></div>
               </div>
             </div>
-            <!-- /carousel-inner -->
-            <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev"> <i class="fa fa-angle-left" aria-hidden="true"></i> </a> <a class="right carousel-control" href="#thumbcarousel" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i> </a> </div>
-          <!-- /thumbcarousel -->
-        </div>
-      </div>
+          </div>
+        </div> <!-- clearfix end -->
+      </div> <!-- product-slider end-->
 
       <div class="product-info">
-
         <div class="page-header" id="seller-info">
           <img class="seller-icon" src="img/seller-icon.jpg" alt="seller-icon">
           <p>
@@ -228,12 +229,15 @@
         <div class="info-body">
           <h1> <strong>Krabby Patty</strong></h1>
           <h4>OMG. This is my favorite!</h4>
-
-          <br>
+          <br> <br>
           <p>
-            <h2>Price : &nbsp;&nbsp; 10.00 $</h2>
+            <h4>Price : &nbsp;&nbsp; </h4>
+            <h2>
+              <span class="price-num">10.00</span>
+              <span>$</span>
+            </h2>
           </p>
-          <br><br>
+          <br>
           <!-- select -->
           <select id="select-option" class="selectpicker" multiple data-selected-text-format="count" data-width="75%">
           	<option value="1">[Option] Add Petty (+2$)</option>
@@ -242,7 +246,6 @@
           	<option value="4">[Option] Add Source (+0.5$)</option>
           	<option value="5">[Option] Add Lettuce (+0.5$)</option>
           </select>
-
         </div> <!-- info-body end -->
 
         <div class="info-bottom">
@@ -287,14 +290,13 @@
       <div class="page-header">
         <h2> Product Details </h2>
         This area will includes <strong>product informations and details.</strong> (ex. brand, Product status, Additional Information, description, Precautions etc.)
-
       </div>
+      
       <div class="page-header">
         <h2>Customer inquiry</h2>
-
       </div>
 
-    </div>
+    </div> <!--container end -->
 
     <footer class="footer">
       <div class="container">
