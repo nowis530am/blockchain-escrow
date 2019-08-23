@@ -13,6 +13,9 @@
     <!-- Custom styles for this template -->
     <link href="css/sticky-footer-navbar.css" rel="stylesheet">
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
     <!--[if lt IE 9]>
@@ -53,7 +56,9 @@
 
       .carousel-control.right, .carousel-control.left { background-color: rgba(0, 0, 0, 0); background-image: none; }
 
-      #product_info {
+      .carousel-inner {object-fit: contain;}
+
+      .product-info {
         width: 50%;
         float: right;
         display: inline;
@@ -61,6 +66,68 @@
         margin-top: 50px;
         padding: 0;
       }
+
+      #seller-info {
+        padding-bottom: 10px;
+        margin: 40px 0 20px;
+        border-bottom: 2px solid #eee;
+      }
+
+      .seller-icon {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        object-fit: scale-down;
+        float: left;
+        margin-right: 20px;
+        padding: 0px;
+      }
+
+      .seller-nickname {
+        padding-top: 6px;
+      }
+
+      .info-body {
+        padding: 0 0 30px 10px;
+        margin: 0px 0 20px;
+        border-bottom: 2px solid #eee;
+      }
+      .info-bottom{
+        padding: 10px;
+      }
+
+      .btn.btn-lg.btn-default {
+        width: 200px;
+        height: 50px;
+        margin-right: 50px;
+      }
+
+      .btn.btn-lg.btn-primary {
+        width: 200px;
+        height: 50px;
+        font-weight: bold;
+        font-size: 20px;
+        background-color: #253066;
+      }
+
+      .modal-title {
+        display: inline;
+      }
+      .modal-body{
+        font-size: 18px;
+      }
+      .close {
+        width: 50px;
+        height: 50px;
+      }
+      .modal-footer{
+        font-size: 15px;
+      }
+      .btn.btn-secondary{
+        margin-right: 10px;
+
+      }
+
     </style>
   </head>
 
@@ -119,26 +186,28 @@
 
     <!-- Begin page content in <body>-->
     <div class="container">
-      <!-- <div class="page-header">
+      <div class="page-header">
         <h1>This is <b>PRODUCT DETAILS</b> page.</h1>
-      </div> -->
+        This area will includes <strong>seller information, title, price, cart button, purchase button </strong>
+      </div>
       <div class="product-slider">
         <div id="carousel" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
-            <div class="item active"> <img src="http://placehold.it/800x800?text=Product+01"> </div>
-            <div class="item"> <img src="http://placehold.it/800x800?text=Product+02"> </div>
-            <div class="item"> <img src="http://placehold.it/800x800?text=Product+03"> </div>
-            <div class="item"> <img src="http://placehold.it/800x800?text=Product+04"> </div>
+            <div class="item active"> <img src="img/product_sample_1.jpg"> </div>
+            <div class="item"> <img src="img/product_sample_2.jpg"> </div>
+            <div class="item"> <img src="img/product_sample_3.jpg"> </div>
+            <div class="item"> <img src="img/product_sample_4.jpg"> </div>
+            <!-- <div class="item"> <img src="http://placehold.it/800x800?text=Product+01"> </div> -->
           </div>
         </div>
         <div class="clearfix">
           <div id="thumbcarousel" class="carousel slide" data-interval="false">
             <div class="carousel-inner">
               <div class="item active">
-                <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="http://placehold.it/80x80?text=Thumb+01"></div>
-                <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="http://placehold.it/80x80?text=Thumb+02"></div>
-                <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="http://placehold.it/80x80?text=Thumb+03"></div>
-                <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="http://placehold.it/80x80?text=Thumb+04"></div>
+                <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="img/product_sample_1.jpg"></div>
+                <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="img/product_sample_2.jpg"></div>
+                <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="img/product_sample_3.jpg"></div>
+                <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="img/product_sample_4.jpg"></div>
               </div>
             </div>
             <!-- /carousel-inner -->
@@ -146,10 +215,75 @@
           <!-- /thumbcarousel -->
         </div>
       </div>
-      <div class="page-header" id="product_info">
-        <h1>This is <b>PRODUCT DETAILS</b> page.</h1>
-        This area will includes <strong>user information, title, price, cart button, purchase button </strong>
-      </div>
+
+      <div class="product-info">
+
+        <div class="page-header" id="seller-info">
+          <img class="seller-icon" src="img/seller-icon.jpg" alt="seller-icon">
+          <p>
+            <h3 class="seller-nickname"><strong>Mr. Krabs</strong></h3>
+            <h4>I love money!</h4>
+          </p>
+        </div>
+        <div class="info-body">
+          <h1> <strong>Krabby Patty</strong></h1>
+          <h4>OMG. This is my favorite!</h4>
+
+          <br>
+          <p>
+            <h2>Price : &nbsp;&nbsp; 10.00 $</h2>
+          </p>
+          <br><br>
+          <!-- select -->
+          <select id="select-option" class="selectpicker" multiple data-selected-text-format="count" data-width="75%">
+          	<option value="1">[Option] Add Petty (+2$)</option>
+          	<option value="2">[Option] Add Bacon (+1$)</option>
+          	<option value="3">[Option] Add Egg (+1$)</option>
+          	<option value="4">[Option] Add Source (+0.5$)</option>
+          	<option value="5">[Option] Add Lettuce (+0.5$)</option>
+          </select>
+
+        </div> <!-- info-body end -->
+
+        <div class="info-bottom">
+          <!-- Button trigger modal -->
+          <!-- Cart button -->
+          <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#cartModal">
+            <span>Cart</span>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="cartModalLabel"><strong>Item added to your cart</strong></h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    You have added items to your cart.<br>
+                    Do you want to check your cart?<br><br>
+                    If not,<br>
+                    Please click 'Close' to continue shopping.
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a href="cart">
+                    <button type="button" class="btn btn-primary">Check my CART</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div> <!-- modal end -->
+
+          <button type="button" class="btn btn-lg btn-primary"><span>Purchase</span></button>
+        </div>
+      </div> <!-- product-info end   -->
+
       <div class="page-header">
         <h2> Product Details </h2>
         This area will includes <strong>product informations and details.</strong> (ex. brand, Product status, Additional Information, description, Precautions etc.)
@@ -172,6 +306,10 @@
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="js/bootstrap.min.js"></script>
   </body>
