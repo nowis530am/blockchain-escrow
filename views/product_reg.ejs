@@ -100,19 +100,34 @@
       <form class="product-reg" action="" method="">
         <fieldset>
           <legend><h1>Product Registeration</h1></legend>
-          *Title: <br>
-          <input type="text" name="title" value="" required>
-          <br><br>
-          *Content: <br>
-          <textarea name="content" rows="10" cols="80" placeholder="Please write a description of the product." required></textarea>
-          <br><br>
-          *Price: <br>
-          <input type="number" name="price" min="0" value="" step="1" required>
-          <br><br><br>
-          <div class="filebox">
-            <label for="upload-file">*Upload image</label>
-            <input type="file" class="form-control-file" id="upload-file" required>
+
+          <div class="form-group">
+            <label for="titleInput">Title</label>
+            <input type="text" class="form-control" id="titleInput" name="title" placeholder="Title" value="" required>
           </div>
+
+          <br><br>
+
+          <div class="form-group">
+            <label for="contentInput">Content</label>
+            <textarea class="form-control" id="contentInput" name="content" rows="10" cols="80" placeholder="Please write a description of the product." required></textarea>
+          </div>
+
+          <br><br>
+
+          <div class="form-group">
+            <label for="priceInput">Price</label>
+            <input type="number" class="form-control" id="priceInput" name="price" min="0" value="" step="1" required>
+          </div>
+
+          <br><br><br>
+
+          <div class="form-group">
+              <label for="inputFile">File input</label>
+              <input type="file" id="inputFile">
+              <p class="help-block">Please upload detail porduct image.</p>
+          </div>
+
           <br><br><br>
           <button class="btn btn-lg btn-primary btn-block" type="submit"> Submit </button>
 
