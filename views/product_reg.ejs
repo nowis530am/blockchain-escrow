@@ -28,6 +28,13 @@
       #search_box {
         width: 300px;
       }
+
+      .btn.btn-lg.btn-primary.btn-block {
+        background-color: #253066;
+        width: 10%;
+      }
+
+
     </style>
   </head>
 
@@ -89,7 +96,28 @@
       <div class="page-header">
         <h1>This is <b>PRODUCT REGISTRATION</b> page.</h1>
       </div>
-    </div>
+
+      <form class="product-reg" action="" method="">
+        <fieldset>
+          <legend><h1>Product Registeration</h1></legend>
+          *Title: <br>
+          <input type="text" name="title" value="" required>
+          <br><br>
+          *Content: <br>
+          <textarea name="content" rows="10" cols="80" placeholder="Please write a description of the product." required></textarea>
+          <br><br>
+          *Price: <br>
+          <input type="number" name="price" min="0" value="" step="1" required>
+          <br><br><br>
+          <div class="filebox">
+            <label for="upload-file">*Upload image</label>
+            <input type="file" class="form-control-file" id="upload-file" required>
+          </div>
+          <br><br><br>
+          <button class="btn btn-lg btn-primary btn-block" type="submit"> Submit </button>
+
+      </form>
+    </div> <!-- container end -->
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
