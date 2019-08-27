@@ -93,7 +93,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index"> <strong>NOW IS 05:30 AM</strong> </a>
+          <a class="navbar-brand" href="/"> <strong>NOW IS 05:30 AM</strong> </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <!-- 로그인, 회원가입, 고객센터, 장바구니 -->
@@ -136,12 +136,12 @@
     </nav>
 
     <!-- Begin page content in <body>-->
-    <form class="form-signin">
+    <form class="form-signin" action="/login" method="post">
       <img class="mb-4" id="logo530am_color" src="img/logo530am_color_2.png" alt="logo530am">
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
