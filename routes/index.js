@@ -11,6 +11,20 @@ router.get('/product_details', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
+router.post('/login', function(req, res, next) {
+  let body = req.body;
+  
+
+  res.cookie("user", body.email , {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true
+  });
+  req.session.email = body.email;
+  res.redirect("/");
+
+
+  res.render('login', { title: 'Express' });
+});
 router.get('/signup', function(req, res, next) {
   res.render('signup', { title: 'Express' });
 });
