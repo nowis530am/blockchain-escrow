@@ -1,493 +1,409 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>[Project]NOW IS 05:30 AM</title>
+<!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
+<!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  #search_box {
+    width: 300px;
+  }
 
-    <!-- Custom styles for this template -->
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+  h2,
+  h4 {
+    display: inline;
+  }
+  .price {
+    text-align: right;
+  }
 
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style>
-
-      #product-registration {
-        font-weight: bold;
-        color: #253066;
-      }
-
-      #search_box {
-        width: 300px;
-      }
-
-      h2, h4 {
-        display: inline;
-      }
-      .price {
-        text-align: right;
-      }
-
-      /*
+  /*
       1. 썸네일 높이를 일정하게 하고싶은데 이 방법을 쓰면 모바일이나 테블릿에서 어떤 현상이 일어나는지 모르겠음.
       2. 현재는 .thumbnail의 높이와 썸네일 안의 img의 높이를 고정시켜놓은 상태지만
          만약 제목이나 상품 설명이 길어진다면 썸네일 박스 밖으로 텍스트가 나가버림.
       3. .row.display-flex를 활성화시켜버리면 텍스트가 썸네일 밖으로 나가버리는 일은 없지만 썸네일의 길이가 일정하지 않게 됨.
       4. 우선적으로 row의 윗변의 위치는 모두 일정하게 해놓음. 따라서 썸네일이 듬성듬성 나오는 경우를 방지했음.
       */
-      .thumbnail {
-        padding: 0px;
-        height: 400px;
-      }
+  .thumbnail {
+    padding: 0px;
+    height: 400px;
+  }
 
-      /* .row.display-flex {
+  /* .row.display-flex {
         display: flex;
         flex-wrap: wrap;
       } */
 
-      .thumbnail img {
-        height:250px !important;
-        width:100%;
-        object-fit: cover;
-      }
-    </style>
-  </head>
+  .thumbnail img {
+    height: 250px !important;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
 
-  <body>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"> <strong>NOW IS 05:30 AM</strong> </a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <!-- 로그인, 회원가입, 고객센터, 장바구니 -->
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="product_reg" id="product-registration">Product registration</a></li>
-            <li><a href="login">Log in</a></li>
-            <li><a href="signup">Sign up</a></li>
-            <li><a href="contact">Contact</a></li>
-            <li>
-              <a href="cart">
-                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
-                <span class="badge">0</span>
+<!-- Begin page content -->
+<div class="container">
+  <!-- Carousel: main-banner -->
+  <div id="carousel-main-banner" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-main-banner" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-main-banner" data-slide-to="1"></li>
+      <li data-target="#carousel-main-banner" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <!-- 이미지는 1140px * 500px, <img src..> 부분이 <img data-src...> 였음.-->
+        <img src="img/Carousel_First_slide.jpg" alt="First slide" />
+      </div>
+      <div class="item">
+        <img src="img/Carousel_Second_slide.jpg" alt="Second slide" />
+      </div>
+      <div class="item">
+        <img src="img/Carousel_Third_slide.jpg" alt="Third slide" />
+      </div>
+    </div>
+    <a class="left carousel-control" href="#carousel-main-banner" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-main-banner" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <!-- Carousel: main-banner end -->
+
+  <!-- item Thumbnail: New Arrival -->
+  <div class="page-header">
+    <h1>New Arrival</h1>
+  </div>
+
+  <div class="row display-flex">
+    <!-- Thumbnail 1 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_1.jpg" alt="Thumbnail 1" />
+          <div class="caption">
+            <h3>Thumbnail label 1</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>100.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 2 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_2.jpg" alt="Thumbnail 2" />
+          <div class="caption">
+            <h3>Thumbnail label 2</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>200.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 3 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_3.jpg" alt="Thumbnail 3" />
+          <div class="caption">
+            <h3>Thumbnail label 3</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>300.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 4 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_4.jpg" alt="Thumbnail 4" />
+          <div class="caption">
+            <h3>Thumbnail label 4</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>400.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 5 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_5.jpg" alt="Thumbnail 5" />
+          <div class="caption">
+            <h3>Thumbnail label 5</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>500.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 6 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_6.jpg" alt="Thumbnail 6" />
+          <div class="caption">
+            <h3>Thumbnail label 6</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>600.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 7 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_7.jpg" alt="Thumbnail 7" />
+          <div class="caption">
+            <h3>Thumbnail label 7</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>700.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 8 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_8.jpg" alt="Thumbnail 8" />
+          <div class="caption">
+            <h3>Thumbnail label 8</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>800.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Thumbnail 9 -->
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="product_details">
+          <img src="img/thumbnail_9.jpg" alt="Thumbnail 9" />
+          <div class="caption">
+            <h3>Thumbnail label 9</h3>
+            <p>This item is for sale.</p>
+            <div class="price">
+              <h2>900.00</h2>
+              <h4>&nbsp;$</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- row: New Arrival end -->
+
+  <!-- item Thumbnail: Popular item -->
+  <div class="page-header">
+    <h1>Popular item</h1>
+  </div>
+
+  <!-- Carousel: popular-item -->
+  <div id="carousel-popular-item" class="carousel slide">
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div class="row display-flex">
+          <!-- Thumbnail 1 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_1.jpg" alt="Thumbnail 1" />
+                <div class="caption">
+                  <h3>Thumbnail label 1</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>100.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
               </a>
-            </li>
-            <!-- 드롭다운 토글 -->
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li> -->
-          </ul>
-          <!-- 검색창 -->
-          <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" id="search_box" placeholder="Search...">
-            </div>
-            <button type="submit" class="btn btn-default">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-          </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-
-    <!-- Begin page content -->
-
-    <div class="container">
-
-      <!-- Carousel: main-banner -->
-      <div id="carousel-main-banner" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carousel-main-banner" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-main-banner" data-slide-to="1"></li>
-          <li data-target="#carousel-main-banner" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <!-- 이미지는 1140px * 500px, <img src..> 부분이 <img data-src...> 였음.-->
-            <img src="img/Carousel_First_slide.jpg" alt="First slide">
-          </div>
-          <div class="item">
-            <img src="img/Carousel_Second_slide.jpg" alt="Second slide">
-          </div>
-          <div class="item">
-            <img src="img/Carousel_Third_slide.jpg" alt="Third slide">
-          </div>
-        </div>
-        <a class="left carousel-control" href="#carousel-main-banner" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-main-banner" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div> <!-- Carousel: main-banner end -->
-
-      <!-- item Thumbnail: New Arrival -->
-      <div class="page-header">
-        <h1>New Arrival</h1>
-      </div>
-
-      <div class="row display-flex">
-        <!-- Thumbnail 1 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_1.jpg" alt="Thumbnail 1">
-              <div class="caption">
-                <h3>Thumbnail label 1</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>100.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 2 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_2.jpg" alt="Thumbnail 2">
-              <div class="caption">
-                <h3>Thumbnail label 2</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>200.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 3 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_3.jpg" alt="Thumbnail 3">
-              <div class="caption">
-                <h3>Thumbnail label 3</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>300.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 4 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_4.jpg" alt="Thumbnail 4">
-              <div class="caption">
-                <h3>Thumbnail label 4</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>400.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 5 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_5.jpg" alt="Thumbnail 5">
-              <div class="caption">
-                <h3>Thumbnail label 5</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>500.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 6 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_6.jpg" alt="Thumbnail 6">
-              <div class="caption">
-                <h3>Thumbnail label 6</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>600.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 7 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_7.jpg" alt="Thumbnail 7">
-              <div class="caption">
-                <h3>Thumbnail label 7</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>700.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 8 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_8.jpg" alt="Thumbnail 8">
-              <div class="caption">
-                <h3>Thumbnail label 8</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>800.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <!-- Thumbnail 9 -->
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="product_details">
-              <img src="img/thumbnail_9.jpg" alt="Thumbnail 9">
-              <div class="caption">
-                <h3>Thumbnail label 9</h3>
-                <p>This item is for sale.</p>
-                <div class="price">
-                  <h2>900.00</h2>
-                  <h4>&nbsp;$</h4>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div> <!-- row: New Arrival end -->
-
-      <!-- item Thumbnail: Popular item -->
-      <div class="page-header">
-        <h1>Popular item</h1>
-      </div>
-
-      <!-- Carousel: popular-item -->
-      <div id="carousel-popular-item" class="carousel slide">
-        <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <div class="row display-flex">
-              <!-- Thumbnail 1 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_1.jpg" alt="Thumbnail 1">
-                    <div class="caption">
-                      <h3>Thumbnail label 1</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>100.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Thumbnail 2 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_2.jpg" alt="Thumbnail 2">
-                    <div class="caption">
-                      <h3>Thumbnail label 2</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>200.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Thumbnail 3 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_3.jpg" alt="Thumbnail 3">
-                    <div class="caption">
-                      <h3>Thumbnail label 3</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>300.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
-          <div class="item">
-            <div class="row display-flex">
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_4.jpg" alt="Thumbnail 4">
-                    <div class="caption">
-                      <h3>Thumbnail label 4</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>400.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
+          <!-- Thumbnail 2 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_2.jpg" alt="Thumbnail 2" />
+                <div class="caption">
+                  <h3>Thumbnail label 2</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>200.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
                 </div>
-              </div>
-              <!-- Thumbnail 5 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_5.jpg" alt="Thumbnail 5">
-                    <div class="caption">
-                      <h3>Thumbnail label 5</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>500.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Thumbnail 6 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_6.jpg" alt="Thumbnail 6">
-                    <div class="caption">
-                      <h3>Thumbnail label 6</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>600.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
+              </a>
             </div>
           </div>
-          <div class="item">
-            <div class="row display-flex">
-              <!-- Thumbnail 7 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_7.jpg" alt="Thumbnail 7">
-                    <div class="caption">
-                      <h3>Thumbnail label 7</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>700.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
+          <!-- Thumbnail 3 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_3.jpg" alt="Thumbnail 3" />
+                <div class="caption">
+                  <h3>Thumbnail label 3</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>300.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
                 </div>
-              </div>
-              <!-- Thumbnail 8 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_8.jpg" alt="Thumbnail 8">
-                    <div class="caption">
-                      <h3>Thumbnail label 8</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>800.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Thumbnail 9 -->
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="product_details">
-                    <img src="img/thumbnail_9.jpg" alt="Thumbnail 9">
-                    <div class="caption">
-                      <h3>Thumbnail label 9</h3>
-                      <p>This item is for sale.</p>
-                      <div class="price">
-                        <h2>900.00</h2>
-                        <h4>&nbsp;$</h4>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
-        <a class="left carousel-control" href="#carousel-popular-item" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-popular-item" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div> <!-- Carousel: popular-item end -->
-
-    </div> <!-- container end -->
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">
-          NOW IS 05:30 AM | developed by Kim Seung Hyun, Heo Tae Jun, Jung Sung Oh <br>Please fill this area. <br> The height can be modified in sticky-footer-navbar.css
-        </p>
       </div>
-    </footer>
-
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+      <div class="item">
+        <div class="row display-flex">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_4.jpg" alt="Thumbnail 4" />
+                <div class="caption">
+                  <h3>Thumbnail label 4</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>400.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Thumbnail 5 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_5.jpg" alt="Thumbnail 5" />
+                <div class="caption">
+                  <h3>Thumbnail label 5</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>500.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Thumbnail 6 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_6.jpg" alt="Thumbnail 6" />
+                <div class="caption">
+                  <h3>Thumbnail label 6</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>600.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="row display-flex">
+          <!-- Thumbnail 7 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_7.jpg" alt="Thumbnail 7" />
+                <div class="caption">
+                  <h3>Thumbnail label 7</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>700.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Thumbnail 8 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_8.jpg" alt="Thumbnail 8" />
+                <div class="caption">
+                  <h3>Thumbnail label 8</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>800.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Thumbnail 9 -->
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="product_details">
+                <img src="img/thumbnail_9.jpg" alt="Thumbnail 9" />
+                <div class="caption">
+                  <h3>Thumbnail label 9</h3>
+                  <p>This item is for sale.</p>
+                  <div class="price">
+                    <h2>900.00</h2>
+                    <h4>&nbsp;$</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#carousel-popular-item" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-popular-item" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <!-- Carousel: popular-item end -->
+</div>
+<!-- container end -->

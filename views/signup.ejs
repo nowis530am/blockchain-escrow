@@ -1,176 +1,92 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>[Project]NOW IS 05:30 AM</title>
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  #search_box {
+    width: 300px;
+  }
 
-    <!-- Custom styles for this template -->
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+  .btn.btn-success {
+    margin-top: 20px;
+    background-color: #253066;
+  }
 
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style>
-      #product-registration {
-        font-weight: bold;
-        color: #253066;
-      }
+  .footer {
+    height: 100px !important;
+    background-color: #ffffff;
+  }
 
-      #search_box {
-        width: 300px;
-      }
+  .copyright_img {
+    width: 215px;
+    height: 50px;
+  }
 
-      .btn.btn-success {
-        margin-top: 20px;
-        background-color: #253066;
-      }
+  .text-muted.copyright_text {
+    margin-top: -5px;
+    font-size: 13px;
+  }
+</style>
 
-      .footer {
-        height: 100px !important;
-        background-color: #FFFFFF;
-      }
+<!-- Begin page content in <body>-->
+<div class="container">
+  <div class="page-header">
+    <h1>This is <b>SIGN UP</b> page.</h1>
+    This page will includes
+    <strong>terms, information(id, password, nickname, address, numbers etc.), Register Complete Notification </strong>
+    in order.
+  </div>
 
-      .copyright_img {
-        width: 215px;
-        height: 50px;
-      }
-
-      .text-muted.copyright_text {
-        margin-top: -5px;
-        font-size: 13px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"> <strong>NOW IS 05:30 AM</strong> </a>
+  <!-- registration form -->
+  <form class="form-horizontal" action="" method="POST">
+    <fieldset>
+      <div id="legend">
+        <legend class="">Register</legend>
+      </div>
+      <div class="control-group">
+        <!-- Username -->
+        <label class="control-label" for="username">Username</label>
+        <div class="controls">
+          <input type="text" id="username" name="username" placeholder="" class="input-xlarge" />
+          <p class="help-block">Username can contain any letters or numbers, without spaces</p>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <!-- 로그인, 회원가입, 고객센터, 장바구니 -->
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="product_reg" id="product-registration">Product registration</a></li>
-            <li><a href="login">Log in</a></li>
-            <li><a href="signup">Sign up</a></li>
-            <li><a href="contact">Contact</a></li>
-            <li>
-              <a href="cart">
-                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
-                <span class="badge">0</span>
-              </a>
-            </li>
-            <!-- 드롭다운 토글 -->
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li> -->
-          </ul>
-          <!-- 검색창 -->
-          <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" id="search_box" placeholder="Search...">
-            </div>
-            <button type="submit" class="btn btn-default">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-          </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-    <!-- Begin page content in <body>-->
-    <div class="container">
-      <div class="page-header">
-        <h1>This is <b>SIGN UP</b> page.</h1>
-        This page will includes <strong>terms, information(id, password, nickname, address, numbers etc.), Register Complete Notification </strong> in order.
       </div>
 
-      <!-- registration form -->
-      <form class="form-horizontal" action='' method="POST">
-        <fieldset>
-          <div id="legend">
-            <legend class="">Register</legend>
-          </div>
-          <div class="control-group">
-            <!-- Username -->
-            <label class="control-label"  for="username">Username</label>
-            <div class="controls">
-              <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-              <p class="help-block">Username can contain any letters or numbers, without spaces</p>
-            </div>
-          </div>
+      <div class="control-group">
+        <!-- E-mail -->
+        <label class="control-label" for="email">E-mail</label>
+        <div class="controls">
+          <input type="text" id="email" name="email" placeholder="" class="input-xlarge" />
+          <p class="help-block">Please provide your E-mail</p>
+        </div>
+      </div>
 
-          <div class="control-group">
-            <!-- E-mail -->
-            <label class="control-label" for="email">E-mail</label>
-            <div class="controls">
-              <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-              <p class="help-block">Please provide your E-mail</p>
-            </div>
-          </div>
+      <div class="control-group">
+        <!-- Password-->
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <input type="password" id="password" name="password" placeholder="" class="input-xlarge" />
+          <p class="help-block">Password should be at least 4 characters</p>
+        </div>
+      </div>
 
-          <div class="control-group">
-            <!-- Password-->
-            <label class="control-label" for="password">Password</label>
-            <div class="controls">
-              <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-              <p class="help-block">Password should be at least 4 characters</p>
-            </div>
-          </div>
+      <div class="control-group">
+        <!-- Password -->
+        <label class="control-label" for="password_confirm">Password (Confirm)</label>
+        <div class="controls">
+          <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge" />
+          <p class="help-block">Please confirm password</p>
+        </div>
+      </div>
 
-          <div class="control-group">
-            <!-- Password -->
-            <label class="control-label"  for="password_confirm">Password (Confirm)</label>
-            <div class="controls">
-              <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-              <p class="help-block">Please confirm password</p>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <!-- Button -->
-            <div class="controls">
-              <button class="btn btn-success">Register</button>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div> <!-- container end -->
-
-    <footer class="footer text-center">
-        <img class="copyright_img" src="img/logo530am_copyright.png" alt="logo530am_copyright">
-        <p class="text-muted copyright_text"> Copyright &copy; NOW IS 530 AM. All rights reserved.</p>
-    </footer>
-
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Register</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<!-- container end -->
