@@ -8,10 +8,10 @@
     <title><%=title%></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="/css/sticky-footer-navbar.css" rel="stylesheet" />
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -103,16 +103,16 @@
         <div id="navbar" class="collapse navbar-collapse">
           <!-- 로그인, 회원가입, 고객센터, 장바구니 -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="product_reg" id="product-registration">Product registration</a></li>
+            <li><a href="/product_reg" id="product-registration">Product registration</a></li>
             <% if(req.session.email) { %>
               <li><a href="/"><%=req.session.email%></a></li>
             <% } else { %>
               <li><a href="/login">Log in</a></li>
             <% } %>
-            <li><a href="signup">Sign up</a></li>
-            <li><a href="contact">Contact</a></li>
+            <li><a href="/signup">Sign up</a></li>
+            <li><a href="/contact">Contact</a></li>
             <li>
-              <a href="cart">
+              <a href="/cart">
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
                 <span class="badge">0</span>
               </a>
@@ -147,15 +147,15 @@
 
     <%- body %>
 
-    <footer class="footer">
-      <img class="copyright_img" src="img/logo530am_copyright.png" alt="logo530am_copyright" />
+    <footer class="footer text-center">
+      <img class="copyright_img" src="/img/logo530am_copyright.png" alt="logo530am_copyright" />
       <p class="text-muted copyright_text">Copyright &copy; NOW IS 530 AM. All rights reserved.</p>
     </footer>
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <%- script %>
   </body>
 </html>

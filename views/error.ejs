@@ -1,9 +1,7 @@
-<html>
-	<head>
-		<title>Error</title>
-	</head>
-	<body>
-		<h1>Error</h1>
-		<%=error.message%>
-	</body>
-</html>
+<div style="width: 960px; margin: 0 auto;">
+  <br /><br /><br /><br /><br />
+	<h1>Error - <%=error.status%></h1>
+  <pre>
+    <%=error.message%>
+	</pre>
+</div>

@@ -1,21 +1,17 @@
 var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
+// index page 
 router.get("/", function(req, res, next) {
   res.locals = {
     title: '[Project]NOW IS 05:30 AM - 중고거래 메인',
     req: req
   };
+  
   res.render("index", { req });
 });
-router.get("/product_details", function(req, res, next) {
-  res.locals = {
-    title: '물품 상세',
-    req: req
-  };
-  res.render("product_details", { req });
-});
+
+// 계정관리 시작
 router.get("/login", function(req, res, next) {
   res.locals = {
     title: '로그인',
@@ -27,10 +23,6 @@ router.post("/login", function(req, res, next) {
   let body = req.body;
 
   try {
-    res.cookie("user", body.email, {
-      expires: new Date(Date.now() + 900000),
-      httpOnly: true
-    });
     req.session.email = body.email;
     res.redirect("/");
   } catch (e) {
@@ -42,7 +34,7 @@ router.post("/login", function(req, res, next) {
     }
     res.status(500).render("error", {
       error: {
-        message: "이메일 또는 비밀번호를 입력해주세요"
+        message: errorMessage
       }
     });
   }
@@ -62,6 +54,25 @@ router.get("/signup", function(req, res, next) {
   };
   res.render("signup", { req });
 });
+// 계정관리 끝
+
+// 물품관련 시작
+router.get("/product_details", function(req, res, next) {
+  res.locals = {
+    title: '물품 상세',
+    req: req
+  };
+  res.render("product_details", { req });
+});
+router.get("/product_reg", function(req, res, next) {
+  res.locals = {
+    title: '물품등록',
+    req: req
+  };
+  res.render("product_reg", { req });
+});
+// 물품관련 끝
+
 router.get("/contact", function(req, res, next) {
   res.locals = {
     title: '연락',
@@ -75,13 +86,6 @@ router.get("/cart", function(req, res, next) {
     req: req
   };
   res.render("cart", { req });
-});
-router.get("/product_reg", function(req, res, next) {
-  res.locals = {
-    title: '물품등록',
-    req: req
-  };
-  res.render("product_reg", { req });
 });
 
 module.exports = router;
