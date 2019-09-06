@@ -37,27 +37,30 @@
     <strong>terms, information(id, password, nickname, address, numbers etc.), Register Complete Notification </strong>
     in order.
   </div>
-
+  <% if(req.errorMessage && req.errorMessage.length > 0) { %>
+  <div class="alert alert-danger" role="alert"><%-req.errorMessage.join("<br />")%></div>
+  <% } %> <% if(req.successMessage && req.successMessage.length > 0) { %>
+  <div class="alert alert-success" role="alert"><%-req.successMessage.join("<br />")%></div>
+  <% } %>
   <!-- registration form -->
-  <form class="form-horizontal" action="" method="POST">
+  <form class="form-horizontal" action="/account/signup" method="post">
     <fieldset>
       <div id="legend">
         <legend class="">Register</legend>
       </div>
-      <div class="control-group">
-        <!-- Username -->
+      <!-- <div class="control-group">
         <label class="control-label" for="username">Username</label>
         <div class="controls">
           <input type="text" id="username" name="username" placeholder="" class="input-xlarge" />
           <p class="help-block">Username can contain any letters or numbers, without spaces</p>
         </div>
-      </div>
+      </div> -->
 
       <div class="control-group">
         <!-- E-mail -->
         <label class="control-label" for="email">E-mail</label>
         <div class="controls">
-          <input type="text" id="email" name="email" placeholder="" class="input-xlarge" />
+          <input type="text" id="email" name="email" placeholder="" value="<%=req.body.email%>" class="input-xlarge" />
           <p class="help-block">Please provide your E-mail</p>
         </div>
       </div>
@@ -66,7 +69,14 @@
         <!-- Password-->
         <label class="control-label" for="password">Password</label>
         <div class="controls">
-          <input type="password" id="password" name="password" placeholder="" class="input-xlarge" />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=""
+            value="<%=req.body.password%>"
+            class="input-xlarge"
+          />
           <p class="help-block">Password should be at least 4 characters</p>
         </div>
       </div>
@@ -75,7 +85,14 @@
         <!-- Password -->
         <label class="control-label" for="password_confirm">Password (Confirm)</label>
         <div class="controls">
-          <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge" />
+          <input
+            type="password"
+            id="password_confirm"
+            name="password_confirm"
+            placeholder=""
+            value="<%=req.body.password_confirm%>"
+            class="input-xlarge"
+          />
           <p class="help-block">Please confirm password</p>
         </div>
       </div>

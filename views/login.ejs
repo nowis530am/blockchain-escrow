@@ -2,8 +2,15 @@
 <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/" />
 
 <!-- Begin page content in <body>-->
-<form class="form-signin text-center" action="/login" method="post">
-  <img class="mb-4" id="logo530am_color" src="img/logo530am_color_2.png" alt="logo530am" />
+<form class="form-signin text-center" action="/account/login" method="post">
+  <img class="mb-4" id="logo530am_color" src="/img/logo530am_color_2.png" alt="logo530am" />
+  <div>
+    <% if(req.errorMessage && req.errorMessage.length > 0) { %>
+    <div class="alert alert-danger" role="alert"><%-req.errorMessage.join("<br />")%></div>
+    <% } %> <% if(req.successMessage && req.successMessage.length > 0) { %>
+    <div class="alert alert-success" role="alert"><%-req.successMessage.join("<br />")%></div>
+    <% } %>
+  </div>
   <label for="inputEmail" class="sr-only">Email address</label>
   <input
     type="email"
@@ -11,6 +18,7 @@
     id="inputEmail"
     class="form-control"
     placeholder="Email address"
+    value="<%=req.body.email%>"
     required
     autofocus
   />

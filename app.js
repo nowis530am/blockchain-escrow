@@ -7,7 +7,7 @@ import session from "express-session";
 import expressLayouts from "express-ejs-layouts";
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var accountRouter = require("./routes/account");
 var web3Router = require("./routes/web3");
 
 var app = express();
@@ -37,7 +37,7 @@ app.use(expressLayouts);
 // <script> 태그를 body 끝에 추가
 app.set("layout extractScripts", true);
 
-app.use("/users", usersRouter);
+app.use("/account", accountRouter);
 app.use("/web3", web3Router);
 app.use("/", indexRouter);
 
