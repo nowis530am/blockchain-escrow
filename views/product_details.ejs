@@ -209,7 +209,7 @@
           </div>
         </div> <!-- modal end -->
 
-        <button type="button" class="btn btn-lg btn-primary"><span>Purchase</span></button>
+        <button id="btn-purchase" type="button" class="btn btn-lg btn-primary"><span>구매하기</span></button>
       </div>
     </div> <!-- product-info end   -->
 
@@ -225,4 +225,30 @@
     </div>
 
   </div> <!--container end -->
+
+  <script>
+  $('#btn-purchase').on('click', function(e) {
+    objBtn = $(this);
+    e.preventDefault();
+
+    $.ajax({
+      url: "/web3/purchase_request",
+      type: "get",
+      dataType: "json",
+      data: {
+        
+      },
+      beforeSend: function(xhr) {
+        objBtn.text("로딩중...");
+      },
+      success: function (data) {
+        objBtn.text("구매하기");
+        alert(data.message);
+      },
+      fail: function () {
+        alert("Error");
+      }
+    });
+  });
+  </script>
   

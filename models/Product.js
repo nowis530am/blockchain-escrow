@@ -23,6 +23,9 @@ const ProductSchema = new Schema(
       type: Boolean,
       default: false
     },
+    contractAddress: {
+      type: String
+    },
     ipAddr: {
       type: String
     }
