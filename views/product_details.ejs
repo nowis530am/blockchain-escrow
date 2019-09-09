@@ -123,10 +123,10 @@
     <div class="product-slider">
       <div id="carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="item active"> <img src="img/product_sample_1.jpg"> </div>
-          <div class="item"> <img src="img/product_sample_2.jpg"> </div>
-          <div class="item"> <img src="img/product_sample_3.jpg"> </div>
-          <div class="item"> <img src="img/product_sample_4.jpg"> </div>
+          <div class="item active"> <img src="/img/product_sample_1.jpg"> </div>
+          <div class="item"> <img src="/img/product_sample_2.jpg"> </div>
+          <div class="item"> <img src="/img/product_sample_3.jpg"> </div>
+          <div class="item"> <img src="/img/product_sample_4.jpg"> </div>
           <!-- <div class="item"> <img src="http://placehold.it/800x800?text=Product+01"> </div> -->
         </div>
       </div>
@@ -134,10 +134,10 @@
         <div id="thumbcarousel" class="carousel slide" data-interval="false">
           <div class="carousel-inner">
             <div class="item active">
-              <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="img/product_sample_1.jpg"></div>
-              <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="img/product_sample_2.jpg"></div>
-              <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="img/product_sample_3.jpg"></div>
-              <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="img/product_sample_4.jpg"></div>
+              <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="/img/product_sample_1.jpg"></div>
+              <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="/img/product_sample_2.jpg"></div>
+              <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="/img/product_sample_3.jpg"></div>
+              <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="/img/product_sample_4.jpg"></div>
             </div>
           </div>
         </div>
@@ -146,21 +146,21 @@
 
     <div class="product-info">
       <div class="page-header" id="seller-info">
-        <img class="seller-icon" src="img/seller-icon.jpg" alt="seller-icon">
+        <img class="seller-icon" src="/img/seller-icon.jpg" alt="seller-icon">
         <p>
-          <h3 class="seller-nickname"><strong>Mr. Krabs</strong></h3>
+          <h3 class="seller-nickname"><strong><%=product.user.email%></strong></h3>
           <h4>I love money!</h4>
         </p>
       </div>
       <div class="info-body">
-        <h1> <strong>Krabby Patty</strong></h1>
+        <h1> <strong><%=product.title%></strong></h1>
         <h4>OMG. This is my favorite!</h4>
         <br> <br>
         <p>
-          <h4>Price : &nbsp;&nbsp; </h4>
+          <h4>가격 : &nbsp;&nbsp; </h4>
           <h2>
-            <span class="price-num">10.00</span>
-            <span>$</span>
+            <span class="price-num"><%=product.price%></span>
+            <span>원</span>
           </h2>
         </p>
         <br>
@@ -217,7 +217,9 @@
       <h2> Product Details </h2>
       This area will includes <strong>product informations and details.</strong> (ex. brand, Product status, Additional Information, description, Precautions etc.)
     </div>
-    
+    <p>
+        <%=product.content%>
+    </p>
     <div class="page-header">
       <h2>Customer inquiry</h2>
     </div>

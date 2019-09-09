@@ -30,7 +30,8 @@ router.post("/login", async function(req, res, next) {
 
     user = await User.findOne({email: body.email, password: body.password});
     if(user) {
-      req.session.email = body.email;
+      req.session._id = user._id;
+      req.session.email = user.email;
       res.redirect("/");
     } else {
       req.errorMessage.push("존재하지 않거나 이메일/비밀번호가 다릅니다.");

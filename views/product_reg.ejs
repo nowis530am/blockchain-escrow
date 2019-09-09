@@ -4,27 +4,27 @@
       <h1>This is <b>PRODUCT REGISTRATION</b> page.</h1>
     </div>
 
-    <form class="product-reg" action="" method="">
+    <form id="product-reg" class="product-reg" action="" method="">
       <fieldset>
         <legend><h1>Product Registeration</h1></legend>
 
         <div class="form-group">
           <label for="titleInput">Title</label>
-          <input type="text" class="form-control" id="titleInput" name="title" placeholder="Title" value="" required>
+          <input type="text" class="form-control" id="titleInput" name="title" placeholder="Title" value="" >
         </div>
 
         <br><br>
 
         <div class="form-group">
           <label for="contentInput">Content</label>
-          <textarea class="form-control" id="contentInput" name="content" rows="10" cols="80" placeholder="Please write a description of the product." required></textarea>
+          <textarea class="form-control" id="contentInput" name="content" rows="10" cols="80" placeholder="Please write a description of the product." ></textarea>
         </div>
 
         <br><br>
 
         <div class="form-group">
           <label for="priceInput">Price</label>
-          <input type="number" class="form-control" id="priceInput" name="price" min="0" value="" step="1" required>
+          <input type="number" class="form-control" id="priceInput" name="price" min="0" value="" step="1" >
         </div>
 
         <br><br><br>
@@ -36,7 +36,38 @@
         </div>
 
         <br><br><br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit"> Submit </button>
+        <button id="btn-submit" class="btn btn-lg btn-primary btn-block" type="submit"> Submit </button>
 
     </form>
   </div> <!-- container end -->
+
+  <script>
+    $('#inputFile').on('change', function(e) {
+      alert(1);
+    });
+
+    $('#product-reg').on('submit', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: "/api/product_reg",
+        type: "post",
+        dataType: "json",
+        data: {
+          title: $('#titleInput').val(),
+          content: $('#contentInput').val(),
+          price: $('#priceInput').val()
+        },
+        beforeSend: function(xhr) {
+          $('#btn-submit').text("Loading...");
+        },
+        success: function (data) {
+          $('#btn-submit').text("Submit");
+          alert(data.message);
+        },
+        fail: function () {
+          alert("Error");
+        }
+      });
+    });
+  </script>

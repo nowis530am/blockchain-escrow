@@ -9,6 +9,7 @@ import expressLayouts from "express-ejs-layouts";
 var indexRouter = require("./routes/index");
 var accountRouter = require("./routes/account");
 var web3Router = require("./routes/web3");
+var apiRouter = require("./routes/api");
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.set("layout extractScripts", true);
 
 app.use("/account", accountRouter);
 app.use("/web3", web3Router);
+app.use("/api", apiRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
