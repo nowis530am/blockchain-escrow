@@ -11,6 +11,7 @@ const config = {
         // },
         useCreateIndex: true,
         useNewUrlParser: true,
+        useUnifiedTopology: true,
     },
     web3_provider: process.env.WEB3_PROVIDER,
     contracts: {
