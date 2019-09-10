@@ -24,6 +24,8 @@
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
-    "@babel/preset-env": "^7.6.0"
+    "@babel/preset-env": "^7.6.0",
+    "clean-css": "^4.2.1",
+    "constantinople": "^3.1.2"
   }
 }
