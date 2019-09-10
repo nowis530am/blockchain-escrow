@@ -59,7 +59,7 @@
           price: $('#priceInput').val()
         },
         beforeSend: function(xhr) {
-          $('#btn-submit').text("블록에 업데이트중입니다.. 잠시만 기다려주세요");
+          $('#btn-submit').text("블록에 기록중입니다.. 잠시만 기다려주세요. (1-3분 이상)");
         },
         success: function (data) {
           $('#btn-submit').text("등록");
