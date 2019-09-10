@@ -84,8 +84,24 @@
   </div>
 
   <div class="row display-flex">
-    <!-- Thumbnail 1 -->
+    <% for(var i = 0; i < products.length; i++) { %>
     <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="/product_details/<%=products[i]._id%>">
+          <img src="img/thumbnail_1.jpg" alt="Thumbnail 1" />
+          <div class="caption">
+            <h3><%=products[i].title%></h3>
+            <p><%=products[i].content%></p>
+            <div class="price">
+              <h2><%=products[i].price%></h2>
+              <h4>&nbsp;원</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <% } %>
+    <!-- <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
           <img src="img/thumbnail_1.jpg" alt="Thumbnail 1" />
@@ -100,7 +116,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 2 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -116,7 +131,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 3 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -132,7 +146,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 4 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -148,7 +161,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 5 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -164,7 +176,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 6 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -180,7 +191,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 7 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -196,7 +206,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 8 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -212,7 +221,6 @@
         </a>
       </div>
     </div>
-    <!-- Thumbnail 9 -->
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="product_details">
@@ -227,7 +235,7 @@
           </div>
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- row: New Arrival end -->
 
@@ -241,7 +249,6 @@
     <div class="carousel-inner" role="listbox">
       <div class="item active">
         <div class="row display-flex">
-          <!-- Thumbnail 1 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -257,7 +264,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 2 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -273,7 +279,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 3 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -308,7 +313,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 5 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -324,7 +328,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 6 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -344,7 +347,6 @@
       </div>
       <div class="item">
         <div class="row display-flex">
-          <!-- Thumbnail 7 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -360,7 +362,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 8 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
@@ -376,7 +377,6 @@
               </a>
             </div>
           </div>
-          <!-- Thumbnail 9 -->
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
               <a href="product_details">
