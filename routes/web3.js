@@ -36,17 +36,17 @@ router.get("/purchase_request", async function(req, res, next) {
     console.log(result);
 
     // let aacontract = new web3.eth.Contract(calculatorABI);
-    result = await escrowContract
-      .deploy({
-        data: config.contracts.escrow.BYTECODE,
-        arguments: [100000] //생성자 params => uint _price 
-      })
-      .send({
-        from: address[0],
-        gasPrice: "1000",
-        gas: 4700000
-      });
-    console.log(result._address);
+    // result = await escrowContract
+    //   .deploy({
+    //     data: config.contracts.escrow.BYTECODE,
+    //     arguments: [100000] //생성자 params => uint _price 
+    //   })
+    //   .send({
+    //     from: address[0],
+    //     gasPrice: "1000",
+    //     gas: 4700000
+    //   });
+    // console.log(result._address);
   } catch (e) {
     console.log(e);
   }
