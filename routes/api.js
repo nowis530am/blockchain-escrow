@@ -4,7 +4,7 @@ import { Product } from "../models";
 import config from "../config";
 var router = express.Router();
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+let web3 = new Web3(new Web3.providers.HttpProvider(config.web3_provider));
 
 // index page
 router.get("/", function(req, res, next) {
