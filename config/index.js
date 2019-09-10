@@ -12,6 +12,7 @@ const config = {
         useCreateIndex: true,
         useNewUrlParser: true,
     },
+    web3_provider: process.env.WEB3_PROVIDER,
     contracts: {
         escrow: {
             ABI: [

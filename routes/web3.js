@@ -3,7 +3,7 @@ import Web3 from "web3";
 var router = express.Router();
 import config from "../config";
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+let web3 = new Web3(new Web3.providers.HttpProvider(config.web3_provider));
 
 // web3
 router.get("/purchase_request", async function(req, res, next) {
