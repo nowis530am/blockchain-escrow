@@ -36,7 +36,7 @@
         </div>
 
         <br><br><br>
-        <button id="btn-submit" class="btn btn-lg btn-primary btn-block" type="submit"> Submit </button>
+        <button id="btn-submit" class="btn btn-lg btn-primary btn-block" type="submit"> 등록 </button>
 
     </form>
   </div> <!-- container end -->
@@ -59,11 +59,12 @@
           price: $('#priceInput').val()
         },
         beforeSend: function(xhr) {
-          $('#btn-submit').text("Loading...");
+          $('#btn-submit').text("블록에 업데이트중입니다.. 잠시만 기다려주세요");
         },
         success: function (data) {
-          $('#btn-submit').text("Submit");
+          $('#btn-submit').text("등록");
           alert(data.message);
+          location.href="/";
         },
         fail: function () {
           alert("Error");
