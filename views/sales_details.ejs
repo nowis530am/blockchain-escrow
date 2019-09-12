@@ -1,0 +1,131 @@
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
+
+  #search_box {
+    width: 300px;
+  }
+  .mypage-menu-title {
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding-bottom: 10px;
+    margin: 40px 0 0;
+  }
+  .mypage-menu {
+    width: 20%;
+    margin: 0 100px 0 0;
+    float: left;
+    display: inline-block;
+  }
+  .nav.nav-pills.nav-stacked {
+    font-size: 18px;
+  }
+  .info-container {
+    display: inline-block;
+    width: 70%;
+    margin: 40px 0 0;
+  }
+  .info-head {
+    font-weight: bold;
+    font-size: 26px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 9px;
+    margin: 0 0 20px;
+  }
+  .listbox {
+    width: 100%;
+    height: auto;
+    border: 2px solid #253066;
+    border-radius: 25px;
+    margin-bottom: 5%;
+  }
+  .sales-info {
+    border-bottom: 2px solid #253066;
+    padding: 2%;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .item {
+    padding: 3%;
+    overflow: hidden;
+  }
+  #item-img {
+    width: 25%;
+    height: 126px;
+    object-fit: cover;
+    border-radius: 25px;
+    float: left;
+    overflow: hidden;
+  }
+  .item-content {
+    width: auto;
+    height: 100%;
+    float: left;
+    margin: 2.5% 0 0 5%;
+  }
+  .itme-title {
+    display: block;
+    margin-bottom: 30%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .item-price {
+    font-size: 17px;
+  }
+  .sales-status {
+    width: 20%;
+    height: 100%;
+    float: right;
+    text-align: center;
+    border-left: 2px solid;
+    margin-top: 2.5%;
+  }
+  #status {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .btn.btn-info.btn-sm {
+    margin-top: 2%;
+    font-size: 14px;
+  }
+</style>
+
+<!-- Begin page content in <body>-->
+<div class="container">
+  <div class="page-header">
+    <h1>This is <b>SALES_DETAILS</b> page.</h1>
+  </div>
+
+  <div class="mypage-menu">
+    <div class="mypage-menu-title">MY PAGE</div>
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation">
+        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+      </li>
+      <li role="presentation" class="active">
+        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-container">
+    <div class="mySaleslist">
+      <div class="info-head">
+        Sales Details
+      </div> <!-- info-head end -->
+    </div> <!-- mySaleslist end -->
+  </div> <!-- info-container end -->
+</div> <!-- container end -->

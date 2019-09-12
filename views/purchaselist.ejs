@@ -1,0 +1,314 @@
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
+
+  #search_box {
+    width: 300px;
+  }
+  .mypage-menu-title {
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding-bottom: 10px;
+    margin: 40px 0 0;
+  }
+  .mypage-menu {
+    width: 20%;
+    margin: 0 100px 0 0;
+    float: left;
+    display: inline-block;
+  }
+  .nav.nav-pills.nav-stacked {
+    font-size: 18px;
+  }
+  .info-container {
+    display: inline-block;
+    width: 70%;
+    margin: 40px 0 0;
+  }
+  .info-head {
+    font-weight: bold;
+    font-size: 26px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 9px;
+    margin: 0 0 20px;
+  }
+  .listbox {
+    width: 100%;
+    height: auto;
+    border: 2px solid #253066;
+    border-radius: 25px;
+    margin-bottom: 5%;
+  }
+  .sales-info {
+    border-bottom: 2px solid #253066;
+    padding: 2%;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .item {
+    padding: 3%;
+    overflow: hidden;
+  }
+  #item-img {
+    width: 25%;
+    height: 126px;
+    object-fit: cover;
+    border-radius: 25px;
+    float: left;
+    overflow: hidden;
+  }
+  .item-content {
+    width: auto;
+    height: 100%;
+    float: left;
+    margin: 2.5% 0 0 5%;
+  }
+  .itme-title {
+    width: 320px;
+    display: block;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-price {
+    font-size: 17px;
+  }
+  .sales-status {
+    width: 20%;
+    height: 100%;
+    float: right;
+    text-align: center;
+    border-left: 2px solid;
+    margin-top: 2.5%;
+    padding-left: 1%;
+  }
+  #status {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .btn.btn-info.btn-sm {
+    margin-top: 2%;
+    font-size: 14px;
+  }
+</style>
+
+<!-- Begin page content in <body>-->
+<div class="container">
+  <div class="page-header">
+    <h1>This is <b>PURCHASE LIST</b> page.</h1>
+  </div>
+
+  <div class="mypage-menu">
+    <div class="mypage-menu-title">MY PAGE</div>
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation">
+        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+      </li>
+      <li role="presentation" class="active">
+        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-container">
+    <div class="mySaleslist">
+      <div class="info-head">
+        Purchase List
+      </div>
+      <div class="info-body">
+        <!-- listbox includes "date, item list". It can be added. -->
+        <div class="listbox">
+          <div class="sales-info">
+            Purchase Date: &nbsp;
+            <span class="sales-date">2019/09/12</span>
+          </div>
+          <!-- item includes "item-img, item title, price, details, status" It can be added. -->
+          <!-- status order
+                1) Pending: 주문 대기
+                2) In progress: 주문 처리 중
+                3) Shipped: 발송됨
+                4) In transit: 배송 중
+                5) Delivered: 배송 완료
+                +) Tracking number: 택배 송장 번호
+                +) Estimated Delivery: 상품 배송 예정일자
+                +) Pending Shipment: 배송 대기
+                +) Cancelled: 주문 취소
+          -->
+          <div class="item">
+            <a href="product_details_temp">
+              <img id="item-img"src="img/spongebob.png" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details_temp">[SpongeBob SquarePants] Shy boy Sponge Bob</a>
+              </span>
+              <span class="item-price">
+                $100,000
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 주문 대기 -->
+              <span id="status">Pending</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <a href="product_details">
+              <img id="item-img"src="img/thumbnail_6.jpg" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details">My old bicycle</a>
+              </span>
+              <span class="item-price">
+                $50,000
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 주문 처리 중 -->
+              <span id="status">In process</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <a href="product_details">
+              <img id="item-img"src="img/thumbnail_7.jpg" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details">Play Station 4</a>
+              </span>
+              <span class="item-price">
+                $1,000
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 발송됨 -->
+              <span id="status">Shipped</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+
+        </div> <!-- listbox end -->
+
+        <div class="listbox">
+          <div class="sales-info">
+            Purchase Date: &nbsp;
+            <span class="sales-date">2019/09/10</span>
+          </div>
+
+          <div class="item">
+            <a href="product_details">
+              <img id="item-img"src="img/thumbnail_8.jpg" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details">Soccer shoes</a>
+              </span>
+              <span class="item-price">
+                $100
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 배송 중 -->
+              <span id="status">In transit</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <a href="product_details">
+              <img id="item-img"src="img/thumbnail_9.jpg" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details">airpod 2 (New)</a>
+              </span>
+              <span class="item-price">
+                $2,000
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 배송완료 -->
+              <span id="status">Delivered</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div> <!-- listbox end -->
+
+        <div class="listbox">
+          <div class="sales-info">
+            Purchase Date: &nbsp;
+            <span class="sales-date">2019/09/06</span>
+          </div>
+
+
+          <div class="item">
+            <a href="product_details">
+              <img id="item-img"src="img/thumbnail_1.jpg" alt="product_img">
+            </a>
+            <div class="item-content">
+              <span class="itme-title">
+                <a href="product_details">My Old Car</a>
+              </span>
+              <span class="item-price">
+                $200,000
+              </span>
+            </div>
+            <div class="sales-status">
+              <!-- 주문 취소 -->
+              <span id="status">Cancelled</span>
+              <p>
+                <a href="order_details">
+                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                </a>
+              </p>
+            </div>
+          </div>
+
+        </div> <!-- listbox end -->
+
+
+
+      </div> <!-- info-body end -->
+    </div> <!-- mySaleslist end -->
+  </div> <!-- info-container end -->
+</div> <!-- container end -->

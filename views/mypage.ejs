@@ -1,0 +1,187 @@
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
+
+  #search_box {
+    width: 300px;
+  }
+  .mypage-menu-title {
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding-bottom: 10px;
+    margin: 40px 0 0;
+  }
+  .mypage-menu {
+    width: 20%;
+    margin: 0 100px 0 0;
+    float: left;
+    display: inline-block;
+  }
+  .nav.nav-pills.nav-stacked {
+    font-size: 18px;
+  }
+  .info-container {
+    display: inline-block;
+    width: 70%;
+    margin: 40px 0 0;
+  }
+  .info-head {
+    font-weight: bold;
+    font-size: 26px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 9px;
+    margin: 0 0 20px;
+  }
+  .info-img {
+    width: 180px;
+    height: 180px;
+    float: left;
+    margin: 0 30px 20px 20px;
+    display: inline-block;
+  }
+  #user-img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+  }
+  .info-text {
+    width: auto;
+    height: 200px;
+    margin: 10px 0 10px 30px;
+    display: inline-block;
+  }
+  .info-list {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: oblique;
+    margin-bottom: 20px;
+  }
+  .info-list-content {
+    margin-left: 50px;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+  }
+  .myAddress {
+    margin: 30px 0 70px 0;
+  }
+</style>
+
+<!-- Begin page content in <body>-->
+<div class="container">
+  <div class="page-header">
+    <h1>This is <b>PROFILE</b> page.</h1>
+  </div>
+
+  <div class="mypage-menu">
+    <div class="mypage-menu-title">MY PAGE</div>
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" class="active">
+        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-container">
+    <div class="myProfile">
+      <div class="info-head">
+        Profile
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <div class="info-img">
+          <img id="user-img" src="img/spongebob.png" alt="unknown_person">
+        </div> <!-- info-img end -->
+        <div class="info-text">
+          <span class="info-list">
+            Name:
+            <span class="info-list-content" id="name">Sponge BOB</span>
+          </span>
+          <span class="info-list">
+            Phone:
+            <span class="info-list-content" id="phone">010-1234-5678</span>
+          </span>
+          <span class="info-list">
+            Email:
+            <span class="info-list-content" id="email">abc@naver.com</span>
+          </span>
+        </div> <!-- info-text end -->
+      </div> <!-- info-body end -->
+    </div> <!-- myProfile end -->
+
+    <div class="myAddress">
+      <div class="info-head">
+        Address
+      </div>
+      <div class="info-body">
+        <span class="info-list">
+          Address:
+          <span class="info-list-content" id="address">2, Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan, Republic of Korea</span>
+        </span>
+        <span class="info-list">
+          Zip Code:
+          <span class="info-list-content" id="zipcode">46241</span>
+        </span>
+      </div>
+    </div> <!-- myAddress end -->
+
+    <div class="myAccount">
+      <div class="info-head">
+        Bank Account
+      </div>
+      <div class="info-body">
+        <span class="info-list">
+          Bank Name:
+          <span class="info-list-content" id="bankname">Hana Bank</span>
+        </span>
+        <span class="info-list">
+          Account Num:
+          <span class="info-list-content" id="accountnum">88091041739807</span>
+        </span>
+      </div>
+    </div> <!-- myAccount end -->
+  </div> <!-- info-container end -->
+
+  <!-- Tab-content navigation -->
+  <!-- <ul class="nav nav-pills nav-stacked" id="mypageTab" role="tablist" aria-orientation="vertical">
+    <li role="presentation" class="active">
+      <a class="nav-link" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+    </li>
+    <li role="presentation">
+      <a class="nav-link active" id="salesList-tab" data-toggle="pill" href="#salesList" role="tab" aria-controls="salesList" aria-selected="true">Sales List</a>
+    </li>
+    <li role="presentation">
+      <a class="nav-link" id="purchaseList-tab" data-toggle="pill" href="#purchaseList" role="tab" aria-controls="purchaseList" aria-selected="false">Purchase List</a>
+    </li>
+    <li role="presentation">
+      <a class="nav-link" id="wishList-tab" data-toggle="pill" href="#wishList" role="tab" aria-controls="wishList" aria-selected="false">Wish List</a>
+    </li>
+    <li role="presentation">
+      <a class="nav-link" id="wallet-tab" data-toggle="pill" href="#wallet" role="tab" aria-controls="wallet" aria-selected="false">Wallet</a>
+    </li>
+  </ul> -->
+
+  <!-- Tab panes -->
+  <!-- <div class="tab-content" id="v-pills-tabContent">
+    <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">Profile</div>
+    <div class="tab-pane fade" id="salesList" role="tabpanel" aria-labelledby="salesList-tab">Sales List</div>
+    <div class="tab-pane fade" id="purchaseList" role="tabpanel" aria-labelledby="purchaseList-tab">Purchase List</div>
+    <div class="tab-pane fade" id="wishList" role="tabpanel" aria-labelledby="wishList-tab">Wish List</div>
+    <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">Wish List</div>
+  </div> -->
+</div> <!-- container end -->
