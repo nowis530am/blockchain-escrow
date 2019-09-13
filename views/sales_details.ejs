@@ -30,67 +30,66 @@
   }
   .info-head {
     font-weight: bold;
-    font-size: 26px;
+    font-size: 24px;
     border-bottom: 2px solid #eee;
     padding-bottom: 9px;
-    margin: 0 0 20px;
+    margin: 5% 0 20px;
   }
-  .listbox {
+  .glyphicon.glyphicon-menu-left {
+    margin: 1px 8px 0 0;
+    overflow: hidden;
+    float: left;
+  }
+  .product-info-left{
+    width: 45%;
+    float: left;
+    margin: 0 30px 0 0;
+    overflow: hidden;
+    disply: inline-block;
+  }
+  #product-img {
     width: 100%;
     height: auto;
-    border: 2px solid #253066;
-    border-radius: 25px;
-    margin-bottom: 5%;
+    object-fit: cover;
   }
-  .sales-info {
-    border-bottom: 2px solid #253066;
-    padding: 2%;
-    font-size: 17px;
-    font-weight: bold;
+  .product-info-right {
+    width: 45%;
+    height: auto;
+    float: left;
+    margin: 0 0 5% 2%;
+  }
+  .product-info-table {
+    width: 100%;
+    disply: block;
+    overflow: hidden;
+    word-break: normal;
+    word-wrap: break-word;
+  }
+  .info-title{
+    font-size: 18px;
+  }
+  .info-content{
+    font-size: 16px;
   }
 
-  .item {
-    padding: 3%;
-    overflow: hidden;
+  .table {
+    font-size: 16px;
+    word-break: normal;
+    word-wrap: break-word;
   }
-  #item-img {
-    width: 25%;
-    height: 126px;
-    object-fit: cover;
-    border-radius: 25px;
-    float: left;
-    overflow: hidden;
-  }
-  .item-content {
-    width: auto;
-    height: 100%;
-    float: left;
-    margin: 2.5% 0 0 5%;
-  }
-  .itme-title {
-    display: block;
-    margin-bottom: 30%;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .item-price {
-    font-size: 17px;
+  .buyer-info-list{
+    width: 20%;
+    text-align: center;
   }
   .sales-status {
     width: 20%;
-    height: 100%;
-    float: right;
     text-align: center;
-    border-left: 2px solid;
-    margin-top: 2.5%;
   }
-  #status {
-    font-size: 22px;
-    font-weight: bold;
+  .status-content {
+    width: 100%;
   }
-  .btn.btn-info.btn-sm {
-    margin-top: 2%;
-    font-size: 14px;
+  .col-lg-6{
+    padding: 0;
   }
 </style>
 
@@ -122,10 +121,314 @@
   </div>
 
   <div class="info-container">
-    <div class="mySaleslist">
+    <div class="mySalesdetails">
+      <a href="/saleslist">
+        <div class="h2">
+          <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </div>
+      </a>
+
+      <div class="h2">
+        <span><b>Sales Details</b></span>
+      </div>
+
       <div class="info-head">
-        Sales Details
+        Product Info
       </div> <!-- info-head end -->
+      <div class="info-body">
+        <div class="product-info-left">
+          <img id="product-img" src="/img/spongebob.png" alt="product-img">
+        </div>
+        <div class="product-info-right">
+          <table class="product-info-table">
+            <tbody>
+              <!-- Product Name -->
+              <tr class="info-title">
+                <th>Product Name:</th>
+              </tr>
+              <tr class="info-content">
+                <td id="product-name">SpongeBob</td>
+              </tr>
+              <tr>
+                <td><br></td> <!--For empty row-->
+              </tr>
+
+              <!-- Price -->
+              <tr class="info-title">
+                <th>Price:</th>
+              </tr>
+              <tr class="info-content">
+                <td id="price">$100,000</td>
+              </tr>
+              <tr>
+                <td><br></td> <!--For empty row-->
+              </tr>
+
+              <!-- Upload date -->
+              <tr class="info-title">
+                <th>Upload date:</th>
+              </tr>
+              <tr class="info-content">
+                <td id="date">2019/09/12</td>
+              </tr>
+              <tr>
+                <td><br></td> <!--For empty row-->
+              </tr>
+
+              <!-- Sales Number -->
+              <tr class="info-title">
+                <th>Sales Number</th>
+              </tr>
+              <tr class="info-content">
+                <td id="sales-number">2019091212345</td>
+              </tr>
+              <tr>
+                <td><br></td> <!--For empty row-->
+              </tr>
+            </tbody>
+          </table>
+        </div> <!-- product-info-right end -->
+      </div> <!-- info-body end -->
+
+      <div class="info-head">
+        Buyer Info
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th class="buyer-info-list">구매자</th>
+              <td id="buyer-name">Mark</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">연락처</th>
+              <td id="buyer-phone">010-1234-5678</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">주소</th>
+              <td id="buyer-address">2, Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan, Republic of Korea</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">요청사항</th>
+              <td id="buyer-requirement">포장 튼튼하게 해주세요!</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">구매일자</th>
+              <td id="buyer-buydate">2019/09/15</td>
+            </tr>
+            <tr>
+              <td><br></td>
+              <td><br></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- info-body end -->
+
+      <div class="info-head">
+        Sales status
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <table class="table">
+          <tbody>
+            <!-- 판매중 -->
+            <tr>
+              <th class="sales-status">
+                판매중
+                <h4><span class="label label-success">Success</span></h4>
+              </th>
+              <td class="status-content">현재 물품이 판매중입니다.
+                <br><br>
+                <a href="product_details_temp">
+                  <button type="button" class="btn btn-sm btn-default"> 수정하기 </button>
+                </a>
+              </td>
+
+            </tr>
+
+            <!-- 거래 진행중 (이 상태일 때 Buyer Info가 떠야함.) -->
+            <tr>
+              <th class="sales-status">
+                진행중
+                <h4><span class="label label-primary">In progress</span></h4>
+              </th>
+              <td class="status-content">
+                물품 구매 요청이 들어왔습니다! <br> 구매자 정보를 확인하여 발송한 뒤, 택배 송장 번호를 입력해주세요.
+                <br><br>
+                <!-- 송장번호 입력 칸-->
+                <form class="" action="index.html" method="post">
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Tracking number">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">입력</button>
+                      </span>
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                </form>
+              </td>
+            </tr>
+
+            <!-- 배송중 -->
+            <tr>
+              <th class="sales-status">
+                발송(배송중)
+                <h4><span class="label label-default">Waiting</span></h4>
+              </th>
+              <td class="status-content">현재 물품이 배송 중입니다..</td>
+            </tr>
+
+            <!-- 판매 완료 -->
+            <tr>
+              <th class="sales-status">
+                판매 완료
+                <h4><span class="label label-default">Waiting</span></h4>
+              </th>
+              <td class="status-content">
+                구매자가 구매를 확정했습니다. 내 지갑에서 거래내역을 확인해주세요.
+                <br><br>
+                <a href="wallet">
+                  <button type="button" class="btn btn-default"> 내 지갑 </button>
+                </a>
+
+              </td>
+            </tr>
+
+            <!-- 거래취소 -->
+            <tr>
+              <th class="sales-status">
+                거래 취소
+                <h4><span class="label label-danger">Fail!</span></h4>
+              </th>
+              <td class="status-content">
+                거래가 취소되었습니다.
+              </td>
+            </tr>
+
+            <!-- 표 마지막줄 테두리 생성 -->
+            <tr>
+              <td colspan="2"><br></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- info-body end -->
+
+      <div class="info-head">
+        <div class="alert alert-danger" role="alert">
+          본 거래는 취소된 거래입니다.
+        </div>
+        Cancellation
+      </div> <!-- info-head end -->
+
+      <div class="info-body">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th class="buyer-info-list">구매자</th>
+              <td id="buyer-name">Mark</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">구매일자</th>
+              <td id="buyer-buydate">2019/09/15</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">취소사유</th>
+              <td id="buyer-cancelreason">더 이상 필요하지 않음.</td>
+            </tr>
+            <tr>
+              <th class="buyer-info-list">취소일자</th>
+              <td id="buyer-canceldate">2019/09/16</td>
+            </tr>
+            <tr>
+              <td><br></td>
+              <td><br></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- info-body end -->
+
+      <div class="info-head">
+        (취소되었을 때) Sales status
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <table class="table">
+          <tbody>
+            <!-- 판매중 -->
+            <tr>
+              <th class="sales-status">
+                판매중
+                <h4><span class="label label-success">Success</span></h4>
+              </th>
+              <td class="status-content">현재 물품이 판매중입니다.
+                <br><br>
+                <button type="button" class="btn btn-sm btn-default"> 수정하기 </button>
+              </td>
+
+            </tr>
+
+            <!-- 거래 진행중 (이 상태일 때 Buyer Info가 떠야함.) -->
+            <tr>
+              <th class="sales-status">
+                진행중
+                <h4><span class="label label-danger">Fail!</span></h4>
+              </th>
+              <td class="status-content">
+                물품 구매 요청이 들어왔습니다! <br> 구매자 정보를 확인하여 발송한 뒤, 택배 송장 번호를 입력해주세요.
+                <br><br>
+                <!-- 송장번호 입력 칸-->
+                <form class="" action="index.html" method="post">
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Tracking number" disabled>
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">입력</button>
+                      </span>
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                </form>
+              </td>
+            </tr>
+
+            <!-- 배송중 -->
+            <tr>
+              <th class="sales-status">
+                발송(배송중)
+                <h4><span class="label label-danger">Fail!</span></h4>
+              </th>
+              <td class="status-content">현재 물품이 배송 중입니다..</td>
+            </tr>
+
+            <!-- 판매 완료 -->
+            <tr>
+              <th class="sales-status">
+                판매 완료
+                <h4><span class="label label-danger">Fail!</span></h4>
+              </th>
+              <td class="status-content">
+                구매자가 구매를 확정했습니다. 내 지갑에서 거래내역을 확인해주세요.
+                <br><br>
+                <button type="button" class="btn btn-default"> 내 지갑 </button>
+              </td>
+            </tr>
+
+            <!-- 거래취소 -->
+            <tr>
+              <th class="sales-status">
+                거래 취소
+                <h4><span class="label label-success">Success</span></h4>
+              </th>
+              <td class="status-content">
+                거래가 취소되었습니다.
+              </td>
+            </tr>
+
+            <!-- 표 마지막줄 테두리 생성 -->
+            <tr>
+              <td colspan="2"><br></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- info-body end -->
+
     </div> <!-- mySaleslist end -->
   </div> <!-- info-container end -->
 </div> <!-- container end -->
