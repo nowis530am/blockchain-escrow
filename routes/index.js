@@ -106,12 +106,12 @@ router.get("/purchaselist", function(req, res, next) {
   res.render("purchaselist", { req });
 });
 
-router.get("/order_details", function(req, res, next) {
+router.get("/purchase_details", function(req, res, next) {
   res.locals = {
     title: "주문 상세",
     req: req
   };
-  res.render("order_details", { req });
+  res.render("purchase_details", { req });
 });
 
 // This is Temp!! Delete later
@@ -121,6 +121,15 @@ router.get("/product_details_temp", function(req, res, next) {
     req: req
   };
   res.render("product_details_temp", { req });
+});
+
+// This is Temp!! Delete later
+router.get("/modal_link_test", function(req, res, next) {
+  res.locals = {
+    title: "(임시)모달 링크 테스트",
+    req: req
+  };
+  res.render("modal_link_test", { req });
 });
 
 
