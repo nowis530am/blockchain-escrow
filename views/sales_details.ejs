@@ -260,13 +260,62 @@
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Tracking number">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">입력</button>
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#enterModal">입력</button>
+                        <!-- 잘못된 양식을 입력했을 때
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#failModal">입력</button> -->
                       </span>
                     </div><!-- /input-group -->
                   </div><!-- /.col-lg-6 -->
                 </form>
               </td>
             </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="enterModal" tabindex="-1" role="dialog" aria-labelledby="enterModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 class="modal-title" id="enterModalLabel"><strong>송장 번호 입력 완료!</strong></h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      송장 번호가 정상적으로 입력되었습니다.
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-primary" data-dismiss="modal">확인</button>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- modal end -->
+
+            <!-- 잘못된 송장 번호 입력시 뜨는 모달 -->
+            <!-- Modal error-->
+            <!-- <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="failModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 class="modal-title" id="failModalLabel"><strong>잘못된 송장 번호</strong></h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      올바른 송장 번호를 입력하여 주세요.
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-primary" data-dismiss="modal">확인</button>
+                  </div>
+                </div>
+              </div>
+            </div>  -->
+            <!-- modal error end -->
+
 
             <!-- 배송중 -->
             <tr>
