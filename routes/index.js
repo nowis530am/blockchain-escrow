@@ -114,6 +114,14 @@ router.get("/purchase_details", function(req, res, next) {
   res.render("purchase_details", { req });
 });
 
+router.get("/wallet", function(req, res, next) {
+  res.locals = {
+    title: "지갑",
+    req: req
+  };
+  res.render("wallet", { req });
+});
+
 // This is Temp!! Delete later
 router.get("/product_details_temp", function(req, res, next) {
   res.locals = {

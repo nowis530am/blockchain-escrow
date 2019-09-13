@@ -1,0 +1,353 @@
+<style>
+  #product-registration {
+    font-weight: bold;
+    color: #253066;
+  }
+
+  #search_box {
+    width: 300px;
+  }
+  .mypage-menu-title {
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding-bottom: 10px;
+    margin: 40px 0 0;
+  }
+  .mypage-menu {
+    width: 20%;
+    margin: 0 100px 0 0;
+    float: left;
+    display: inline-block;
+  }
+  .nav.nav-pills.nav-stacked {
+    font-size: 18px;
+  }
+  .info-container {
+    display: inline-block;
+    width: 70%;
+    margin: 40px 0 0;
+  }
+  .info-head {
+    font-weight: bold;
+    font-size: 26px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 9px;
+    margin: 0 0 20px;
+  }
+  .info-body {
+    margin-bottom: 10%;
+  }
+  .info-list {
+    display: block;
+    font-size: 22px;
+    font-weight: bold;
+    font-style: oblique;
+    margin-bottom: 20px;
+  }
+  .info-list-content {
+    margin-left: 4%;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .info-sublist {
+    margin: 2% 0 0 0;
+    /* font-weight: bold; */
+  }
+
+  .btn.btn-lg.btn-primary {
+    margin: 0 0 3% 4%;
+    font-style: normal;
+  }
+
+  .form-control {
+    width: 50%;
+    margin: 1% 0 0 0;
+  }
+  .btn.btn-success {
+    margin: 3% 0 0 0;
+  }
+
+  tbody{
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+  }
+
+  .transaction-head {
+    width: 30%;
+    text-align: center;
+  }
+  .non-bordered {
+    border-top: 0px !important;
+  }
+  .money {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  /* .pagination {
+    disply: block;
+    text-align: center;
+  }
+  .pagination > li > a {
+    float: none;
+  } */
+
+</style>
+
+<!-- Begin page content in <body>-->
+<div class="container">
+  <div class="page-header">
+    <h1>This is <b>WALLET</b> page.</h1>
+  </div>
+
+  <div class="mypage-menu">
+    <div class="mypage-menu-title">MY PAGE</div>
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation">
+        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+      </li>
+      <li role="presentation" class="active">
+        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-container">
+    <div class="myWallet">
+      <div class="info-head">
+        Wallet
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <!-- 지갑주소 -->
+        <span class="info-list">
+          <li>Wallet Address: <br></li>
+          <span class="info-list-content" id="wallet-address">35B8-456F-8EWR-DF1V-ASD1-1FDE</span>
+        </span>
+
+        <!-- Button trigger modal -->
+        <!-- 지갑 주소 생성 Modal Trigger -->
+        <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#makeAccountModal">
+          <span class="info-list-button"><b>지갑 주소 생성</b></span>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="makeAccountModal" tabindex="-1" role="dialog" aria-labelledby="makeAccountModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="makeAccountModalLabel"><strong>지갑 주소 생성</strong></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>
+                  지갑 주소를 생성합니다.<br>
+                  생성을 원하시면 <b>'생성'</b> 버튼을 눌러주세요.<br>
+                  지갑 생성을 원치 않으면 <b>'닫기'</b> 버튼을 눌러주세요.
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <a href="modal_link_test">
+                  <button type="button" class="btn btn-primary">생성</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div> <!-- modal end -->
+
+        <!-- 잔액 -->
+        <span class="info-list">
+          <li>Balance: <br></li>
+          <span class="info-list-content" id="balance">465,157</span>
+        </span>
+
+        <!-- 돈 보내기 -->
+        <span class="info-list">
+          <li>Send Money: <br></li>
+          <div class="info-list-content">
+            <form class="send-money" action="index.html" method="post">
+              <div class="info-sublist">
+                <span>Reciever Wallet Address</span>
+              </div>
+              <input type="text" class="form-control" placeholder="456ADSF8152Q21DF81XCX821" name="" value="">
+              <div class="info-sublist">
+                <span>Amount</span>
+              </div>
+              <input type="number" class="form-control" placeholder="2500" name="" value="">
+              <button class="btn btn-success" type="submit" name="button">Send</button>
+            </form>
+          </div>
+        </span>
+
+      </div> <!-- info-body end -->
+
+      <!-- 거래 내역 -->
+      <div class="info-head">
+        Account History
+      </div> <!-- info-head end -->
+      <div class="info-body">
+        <table class="table">
+
+          <!-- tbody가 한 단위임 -->
+          <!-- 1번 tbody = 입금 상황 -->
+          <tbody>
+            <tr class="transaction-row">
+              <th class="non-bordered transaction-head">거래일자</th>
+              <td class="non-bordered">
+                <span>2019-09-12</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">사용자</th>
+              <td class="non-bordered">
+                <span>SpongeBob</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">물품명</th>
+              <td class="non-bordered">
+                <span>Headphone</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">상태</th>
+              <td class="non-bordered">
+                <span style="color: green; font-weight: bold;">입금</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">금액</th>
+              <td class="non-bordered money">
+                <span>10,000</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">잔액</th>
+              <td class="non-bordered">
+                <span>464,359</span>
+              </td>
+            </tr>
+          </tbody> <!-- tbody end -->
+
+          <!-- 2번 tbody = 출금 상황 -->
+          <tbody>
+            <tr class="transaction-row">
+              <th class="non-bordered transaction-head">거래일자</th>
+              <td class="non-bordered">
+                <span>2019-09-09</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">사용자</th>
+              <td class="non-bordered">
+                <span>Mark</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">물품명</th>
+              <td class="non-bordered">
+                <span>Airpod 2</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">상태</th>
+              <td class="non-bordered">
+                <span style="color: red; font-weight: bold;">출금</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">금액</th>
+              <td class="non-bordered money">
+                <span>2,000</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">잔액</th>
+              <td class="non-bordered">
+                <span>454,359</span>
+              </td>
+            </tr>
+          </tbody> <!-- tbody end -->
+
+          <!-- 3번 tbody = 출금 상황 -->
+          <tbody>
+            <tr class="transaction-row">
+              <th class="non-bordered transaction-head">거래일자</th>
+              <td class="non-bordered">
+                <span>2019-09-02</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">사용자</th>
+              <td class="non-bordered">
+                <span>Anne</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">물품명</th>
+              <td class="non-bordered">
+                <span>Old Car</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">상태</th>
+              <td class="non-bordered">
+                <span style="color: red; font-weight: bold;">출금</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">금액</th>
+              <td class="non-bordered money">
+                <span>170,000</span>
+              </td>
+            </tr>
+            <tr>
+              <th class="non-bordered transaction-head">잔액</th>
+              <td class="non-bordered">
+                <span>456,359</span>
+              </td>
+            </tr>
+          </tbody> <!-- tbody end -->
+        </table>
+
+        <!-- 혹시 양이 많아지면 다음 페이지로 볼 수 있게하면 어떨까..? -->
+        <div class="text-center">
+          <nav>
+            <ul class="pagination">
+              <li class="disabled">
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li ><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </div> <!-- info-body end -->
+
+    </div> <!-- myWallet end -->
+  </div> <!-- info-container end -->
+</div> <!-- container end -->
