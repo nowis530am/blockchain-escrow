@@ -108,7 +108,8 @@
         <!-- info-head end -->
         <div class="info-body">
           <div class="info-img">
-            <img id="user-img" src="img/spongebob.png" alt="unknown_person" />
+            <img id="user-img" src="<%=user.profileImagePath%>" alt="unknown_person" />
+            <input type="file" name="image"/>
           </div>
           <!-- info-img end -->
           <div class="info-text">
@@ -218,29 +219,58 @@ $('#profile_form').on('submit', function(e) {
   var address = $('[name="address"]').val();
   var zipCode = $('[name="zipCode"]').val();
 
+
+
+
+  var formData = new FormData($('#profile_form')[0]);
+
   $.ajax({
     url: "/api/profile_update",
+    enctype: 'multipart/form-data',
     type: "post",
     dataType: "json",
-    data: {
-      name,
-      phone,
-      email,
-      address,
-      zipCode,
-    },
+    processData: false,
+    contentType: false,
+    data: formData,
     beforeSend: function(xhr) {
       $('#btn-submit').text('업데이트 중..');
-      // $('#balance').text("잔액 가져오는 중..");
     },
     success: function (data) {
       alert(data.message);
       $('#btn-submit').text('프로필 정보 업데이트');
+      location.replace("")
     },
     fail: function () {
       $('#btn-submit').text('프로필 정보 업데이트');
       alert("Error");
     }
   });
+
+
+
+  // $.ajax({
+  //   url: "/api/profile_update",
+  //   type: "post",
+  //   dataType: "json",
+  //   data: {
+  //     name,
+  //     phone,
+  //     email,
+  //     address,
+  //     zipCode,
+  //   },
+  //   beforeSend: function(xhr) {
+  //     $('#btn-submit').text('업데이트 중..');
+  //     // $('#balance').text("잔액 가져오는 중..");
+  //   },
+  //   success: function (data) {
+  //     alert(data.message);
+  //     $('#btn-submit').text('프로필 정보 업데이트');
+  //   },
+  //   fail: function () {
+  //     $('#btn-submit').text('프로필 정보 업데이트');
+  //     alert("Error");
+  //   }
+  // });
 });
 </script>

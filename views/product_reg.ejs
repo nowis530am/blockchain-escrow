@@ -4,7 +4,7 @@
       <h1>This is <b>PRODUCT REGISTRATION</b> page.</h1>
     </div>
 
-    <form id="product-reg" class="product-reg" action="" method="">
+    <form id="product-reg" enctype="multipart/form-data" class="product-reg" action="" method="post">
       <fieldset>
         <legend><h1>Product Registration</h1></legend>
 
@@ -31,8 +31,8 @@
 
         <div class="form-group">
             <label for="inputFile">File input</label>
-            <input type="file" id="inputFile">
-            <p class="help-block">Please upload detail porduct image.</p>
+            <input type="file" name="image" multiple>
+            <p class="help-block">이미지를 선택해주세요. <strong style="color:red;">* 중복선택 가능 *</strong></p>
         </div>
 
         <br><br><br>
@@ -42,23 +42,34 @@
   </div> <!-- container end -->
 
   <script>
-    $('#inputFile').on('change', function(e) {
-      alert(1);
-    });
-
+    // $('#inputFile').on('change', function(e) {
+    //   alert(1);
+    // });
+    
     $('#product-reg').on('submit', function(e) {
       e.preventDefault();
+      
+      var formData = new FormData($('#product-reg')[0]);
+      console.log(formData.get('image'));
+      // formData.append("image", $("#inputFile")[0].files[0]);
+      // formData.append("title", $('#titleInput').val());
+      // formData.append("content", $('#contentInput').val());
+      // formData.append("price", $('#priceInput').val());
+
+
+
 
       $.ajax({
         url: "/api/product_reg",
+        enctype: 'multipart/form-data',
         type: "post",
         dataType: "json",
-        data: {
-          title: $('#titleInput').val(),
-          content: $('#contentInput').val(),
-          price: $('#priceInput').val()
-        },
+        processData: false,
+        // contentType: 'application/json',
+        contentType: false,
+        data: formData,
         beforeSend: function(xhr) {
+          console.log(formData);
           $('#btn-submit').text("블록에 기록중입니다.. 잠시만 기다려주세요. (1-3분 이상)");
         },
         success: function (data) {
