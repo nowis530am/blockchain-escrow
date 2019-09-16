@@ -2,16 +2,28 @@ import express from "express";
 import Web3 from "web3";
 import { Product, User } from "../models";
 import config from "../config";
+import multer from "multer";
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, "public/uploads/");
+    },
+    filename: function(req, file, cb) {
+      cb(null, file.originalname);
+    }
+  })
+});
 var router = express.Router();
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider(config.web3_provider));
-var subscription = web3.eth.subscribe('pendingTransactions', function(error, result){
-  // if (!error)
-  //     console.log(result);
-})
-.on("data", function(transaction){
-  console.log("pendingTransaction: " + transaction);
-});
+var subscription = web3.eth
+  .subscribe("pendingTransactions", function(error, result) {
+    // if (!error)
+    //     console.log(result);
+  })
+  .on("data", function(transaction) {
+    console.log("pendingTransaction: " + transaction);
+  });
 
 // unsubscribes the subscription
 // subscription.unsubscribe(function(error, success){
@@ -24,25 +36,25 @@ var subscription = web3.eth.subscribe('pendingTransactions', function(error, res
 //   console.log('current block #' + block.number);
 // });
 
-
 // account
-router.post("/profile_update", async function(req, res, next) {
+router.post("/profile_update", upload.fields([{ name: "image" }]), async function(req, res, next) {
   let body, user;
   body = req.body;
-  
+
   if (!req.session.email) {
     res.json({ message: "로그인 해주세요." });
     return;
   }
 
-  user = await User.findOne({email: req.session.email});
+  user = await User.findOne({ email: req.session.email });
   user.name = body.name;
   user.phone = body.phone;
   user.email = body.email;
   user.address = body.address;
   user.zipCode = body.zipCode;
+  user.profileImagePath = "/uploads/" + req.files.image[0].filename;
   await user.save();
-  
+
   // name
   res.json({ message: "업데이트 완료" });
 });
@@ -56,7 +68,7 @@ router.get("/balance", async function(req, res, next) {
   }
 
   body = req.body;
-  user = await User.findOne({email: req.session.email});
+  user = await User.findOne({ email: req.session.email });
 
   // address = await web3.eth.getAccounts();
   address = user.account.address;
@@ -83,10 +95,10 @@ router.post("/create_wallet_address", async function(req, res, next) {
     privateKey: randomHex
   };
   await user.save();
-  
+
   // address = await web3.eth.getAccounts();
   // balance = await web3.utils.fromWei(await web3.eth.getBalance(address[0]), "ether");
-  
+
   res.json({ message: "지갑 주소가 생성되었습니다.", address });
 });
 
@@ -102,25 +114,22 @@ router.post("/send_money", async function(req, res, next) {
   // console.log(body.toAddress);
   // console.log(user.walletAddress);
 
-
-
   try {
     await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
 
     result = await web3.eth.sendTransaction({
       from: user.account.address,
-      to: body.toAddress, 
-      value: String(web3.utils.toWei(body.amount, "ether")), 
-      gas: 4700000, 
+      to: body.toAddress,
+      value: String(web3.utils.toWei(body.amount, "ether")),
+      gas: 4700000,
       gasPrice: "1000"
     });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     res.json({ message: "오류발생." + e });
     return;
   }
-  
-  
+
   res.json({ message: "돈을 보냈습니다." });
 });
 
@@ -141,10 +150,10 @@ router.get("/get_transaction_history", async function(req, res, next) {
     // result.forEach(rec => {
     //   console.log(rec.blockNumber, rec.transactionHash, rec.topics);
     // });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
-  
+
   res.json({ result });
 });
 
@@ -158,7 +167,14 @@ async function getTransactionsByAccount(myaccount, startBlockNumber, endBlockNum
     startBlockNumber = endBlockNumber - 1000;
     console.log("Using startBlockNumber: " + startBlockNumber);
   }
-  console.log("Searching for transactions to/from account \"" + myaccount + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
+  console.log(
+    'Searching for transactions to/from account "' +
+      myaccount +
+      '" within blocks ' +
+      startBlockNumber +
+      " and " +
+      endBlockNumber
+  );
 
   for (var i = startBlockNumber; i <= endBlockNumber; i++) {
     if (i % 1000 == 0) {
@@ -166,30 +182,57 @@ async function getTransactionsByAccount(myaccount, startBlockNumber, endBlockNum
     }
     var block = await web3.eth.getBlock(i, true);
     if (block != null && block.transactions != null) {
-      block.transactions.forEach( function(e) {
+      block.transactions.forEach(function(e) {
         if (myaccount == "*" || myaccount == e.from || myaccount == e.to) {
           result.push(e);
-          console.log("  tx hash          : " + e.hash + "\n"
-            + "   nonce           : " + e.nonce + "\n"
-            + "   blockHash       : " + e.blockHash + "\n"
-            + "   blockNumber     : " + e.blockNumber + "\n"
-            + "   transactionIndex: " + e.transactionIndex + "\n"
-            + "   from            : " + e.from + "\n" 
-            + "   to              : " + e.to + "\n"
-            + "   value           : " + e.value + "\n"
-            + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
-            + "   gasPrice        : " + e.gasPrice + "\n"
-            + "   gas             : " + e.gas + "\n"
-            + "   input           : " + e.input);
+          console.log(
+            "  tx hash          : " +
+              e.hash +
+              "\n" +
+              "   nonce           : " +
+              e.nonce +
+              "\n" +
+              "   blockHash       : " +
+              e.blockHash +
+              "\n" +
+              "   blockNumber     : " +
+              e.blockNumber +
+              "\n" +
+              "   transactionIndex: " +
+              e.transactionIndex +
+              "\n" +
+              "   from            : " +
+              e.from +
+              "\n" +
+              "   to              : " +
+              e.to +
+              "\n" +
+              "   value           : " +
+              e.value +
+              "\n" +
+              "   time            : " +
+              block.timestamp +
+              " " +
+              new Date(block.timestamp * 1000).toGMTString() +
+              "\n" +
+              "   gasPrice        : " +
+              e.gasPrice +
+              "\n" +
+              "   gas             : " +
+              e.gas +
+              "\n" +
+              "   input           : " +
+              e.input
+          );
         }
-      })
+      });
     }
   }
 
   return result;
 }
 
-router.post("/product_reg", async function(req, res, next) {
+router.post("/product_reg", upload.fields([{ name: "image" }]), async function(req, res, next) {
   let body, escrowContract, address, balance, result, user, product;
 
   // geth 연결 확인
@@ -202,6 +245,7 @@ router.post("/product_reg", async function(req, res, next) {
 
   try {
     body = req.body;
+
     if (!req.session.email) {
       res.json({ message: "로그인 해주세요." });
       return;
@@ -213,7 +257,7 @@ router.post("/product_reg", async function(req, res, next) {
     await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
 
     escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI);
-     result = await escrowContract
+    result = await escrowContract
       .deploy({
         data: config.contracts.escrow.BYTECODE,
         arguments: [body.price] //생성자 params => uint _price
@@ -223,36 +267,40 @@ router.post("/product_reg", async function(req, res, next) {
         gasPrice: "1000",
         gas: 3000000
       });
-      // }, function(error, transactionHash){ 
-        
-      //  })
-      // .on('error', function(error){ 
-        
-      //  })
-      // .on('transactionHash', function(transactionHash){ 
-        
-      //  })
-      // .on('receipt', function(receipt){
-      //    console.log("contractAddress: "+receipt.contractAddress) // contains the new contract address
-      // })
-      // .on('confirmation', function(confirmationNumber, receipt){ 
-        
-      //  })
-      // .then(function(newContractInstance){
-      //     console.log("newContractInstance: "+newContractInstance.options.address) // instance with the new contract address
-      // });
-      console.log(result);
-      console.log(result._address);
-      console.log(result.options.address);
-      console.log(result.contractAddress);
+    // }, function(error, transactionHash){
 
+    //  })
+    // .on('error', function(error){
+
+    //  })
+    // .on('transactionHash', function(transactionHash){
+
+    //  })
+    // .on('receipt', function(receipt){
+    //    console.log("contractAddress: "+receipt.contractAddress) // contains the new contract address
+    // })
+    // .on('confirmation', function(confirmationNumber, receipt){
+
+    //  })
+    // .then(function(newContractInstance){
+    //     console.log("newContractInstance: "+newContractInstance.options.address) // instance with the new contract address
+    // });
+    console.log(result);
+    console.log(result._address);
+    console.log(result.options.address);
+    console.log(result.contractAddress);
+
+    console.log(req.files);
     product = new Product();
-    console.log('----------------------------' + product._id + "---------------");  
+    console.log("----------------------------" + product._id + "---------------");
     product.user = req.session._id;
     product.title = body.title;
     product.content = body.content;
     product.price = body.price;
     product.contractAddress = result._address;
+    product.images = req.files.image.map(item => {
+      return "/uploads/" + item.filename;
+    });
     await product.save();
   } catch (e) {
     console.log(e);
@@ -264,15 +312,11 @@ router.post("/product_reg", async function(req, res, next) {
 });
 // 물품관련 끝
 
-
 router.get("/product_details", async function(req, res, next) {
   let body, query, user, result, escrowContract;
   query = req.query;
 
-
-  
   try {
-
     // var testSource='contract Test {  function double(int a) constant returns(int) { return 2*a; } }'
     // var testCompiled = await web3.eth.compile.solidity(testSource);
     // console.log(testCompiled);
@@ -291,7 +335,7 @@ router.get("/product_details", async function(req, res, next) {
     console.log(result);
     result = await escrowContract.methods.getNumber().call();
     console.log("number: " + result);
-    result = await escrowContract.methods.input_number(112233).call({from: user.account.address});
+    result = await escrowContract.methods.input_number(112233).call({ from: user.account.address });
     console.log(result);
     result = await escrowContract.methods.getNumber().call();
     console.log("number: " + result);
@@ -301,17 +345,17 @@ router.get("/product_details", async function(req, res, next) {
     console.log("price: " + result);
     result = await escrowContract.methods.getState().call();
     console.log("state: " + result);
-    result = await escrowContract.methods.purchase_request().call({from: user.account.address});
+    result = await escrowContract.methods.purchase_request().call({ from: user.account.address });
     console.log(result);
     result = await escrowContract.methods.getState().call();
     console.log("state: " + result);
     console.log("---------------------------");
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     res.json({ message: String(e) });
     return;
   }
-  
+
   res.json({ message: "등록 완료" });
 });
 
@@ -319,7 +363,7 @@ router.post("/purchase_request", function(req, res, next) {
   let body;
 
   body = req.body;
-  
+
   res.json({ message: "등록 완료" });
 });
 

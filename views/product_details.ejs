@@ -123,10 +123,9 @@
     <div class="product-slider">
       <div id="carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="item active"> <img src="/img/product_sample_1.jpg"> </div>
-          <div class="item"> <img src="/img/product_sample_2.jpg"> </div>
-          <div class="item"> <img src="/img/product_sample_3.jpg"> </div>
-          <div class="item"> <img src="/img/product_sample_4.jpg"> </div>
+          <% for(var i = 0; i < product.images.length; i++) { %>
+          <div class="item <%=(i == 0) ? 'active' : ''%>"> <img src="<%=product.images[i]%>"> </div>
+          <% } %>
           <!-- <div class="item"> <img src="http://placehold.it/800x800?text=Product+01"> </div> -->
         </div>
       </div>
@@ -134,10 +133,9 @@
         <div id="thumbcarousel" class="carousel slide" data-interval="false">
           <div class="carousel-inner">
             <div class="item active">
-              <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="/img/product_sample_1.jpg"></div>
-              <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="/img/product_sample_2.jpg"></div>
-              <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="/img/product_sample_3.jpg"></div>
-              <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="/img/product_sample_4.jpg"></div>
+                <% for(var i = 0; i < product.images.length; i++) { %>
+                  <div data-target="#carousel" data-slide-to="<%=i%>" class="thumb"><img src="<%=product.images[i]%>"></div>
+                <% } %>
             </div>
           </div>
         </div>
@@ -146,10 +144,10 @@
 
     <div class="product-info">
       <div class="page-header" id="seller-info">
-        <img class="seller-icon" src="/img/seller-icon.jpg" alt="seller-icon">
+        <img class="seller-icon" src="<%=product.user.profileImagePath%>" alt="seller-icon">
         <p>
-          <h3 class="seller-nickname"><strong><%=product.user.email%></strong></h3>
-          <h4>I love money!</h4>
+            <h3 class="seller-nickname"><strong><%=product.user.name%></strong></h3>
+          <h4><%=product.user.email%></h4>
         </p>
       </div>
       <div class="info-body">
@@ -177,9 +175,9 @@
       <div class="info-bottom">
         <!-- Button trigger modal -->
         <!-- Cart button -->
-        <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#cartModal">
+        <!-- <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#cartModal">
           <span>Cart</span>
-        </button>
+        </button> -->
 
         <!-- Modal -->
         <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
@@ -209,7 +207,7 @@
           </div>
         </div> <!-- modal end -->
 
-        <button id="btn-purchase" type="button" class="btn btn-lg btn-primary"><span>구매하기</span></button>
+        <button id="btn-purchase" type="button" class="btn btn-lg btn-primary" style="width:100%;"><span>구매하기</span></button>
       </div>
     </div> <!-- product-info end   -->
 
@@ -222,7 +220,11 @@
     </p>
     <div class="page-header">
       <h2>Customer inquiry</h2>
-      <img src="/img/thumbnail_4.jpg" alt="">
+      <div class="text-center">
+        <% for(var i = 0; i < product.images.length; i++) { %>
+          <div><img src="<%=product.images[i]%>" alt=""></div>
+        <% } %>
+      </div>
     </div>
 
   </div> <!--container end -->
