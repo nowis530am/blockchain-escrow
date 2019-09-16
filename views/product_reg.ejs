@@ -64,7 +64,7 @@
         success: function (data) {
           $('#btn-submit').text("등록");
           alert(data.message);
-          location.href="/";
+          location.href="/product_details/" + data._id;
         },
         fail: function () {
           alert("Error");

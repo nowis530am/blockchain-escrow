@@ -228,6 +228,23 @@
   </div> <!--container end -->
 
   <script>
+    $.ajax({
+      url: "/api/product_details",
+      type: "get",
+      dataType: "json",
+      data: {
+        contractAddress: "<%=product.contractAddress%>"
+      },
+      beforeSend: function(xhr) {
+      },
+      success: function (data) {
+        alert(data.message);
+      },
+      fail: function () {
+        alert("Error");
+      }
+    });
+
   $('#btn-purchase').on('click', function(e) {
     objBtn = $(this);
     e.preventDefault();

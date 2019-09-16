@@ -63,6 +63,7 @@
   .info-list-content {
     margin-left: 50px;
     font-size: 14px;
+    /* width: 50%; */
     font-weight: normal;
     font-style: normal;
   }
@@ -98,64 +99,84 @@
     </ul>
   </div>
 
-  <div class="info-container">
-    <div class="myProfile">
-      <div class="info-head">
-        Profile
-      </div> <!-- info-head end -->
-      <div class="info-body">
-        <div class="info-img">
-          <img id="user-img" src="img/spongebob.png" alt="unknown_person">
-        </div> <!-- info-img end -->
-        <div class="info-text">
-          <span class="info-list">
-            Name:
-            <span class="info-list-content" id="name">Sponge BOB</span>
-          </span>
-          <span class="info-list">
-            Phone:
-            <span class="info-list-content" id="phone">010-1234-5678</span>
-          </span>
-          <span class="info-list">
-            Email:
-            <span class="info-list-content" id="email">abc@naver.com</span>
-          </span>
-        </div> <!-- info-text end -->
-      </div> <!-- info-body end -->
-    </div> <!-- myProfile end -->
+  <form id="profile_form">
+    <div class="info-container">
+      <div class="myProfile">
+        <div class="info-head">
+          Profile
+        </div>
+        <!-- info-head end -->
+        <div class="info-body">
+          <div class="info-img">
+            <img id="user-img" src="img/spongebob.png" alt="unknown_person" />
+          </div>
+          <!-- info-img end -->
+          <div class="info-text">
+            <span class="info-list">
+              Name: 
+              <!-- <span class="info-list-content" id="name"></span> -->
+              <input type="text" class="info-list-content" name="name" value="<%=user.name%>" />
+            </span>
+            <span class="info-list">
+              Phone:
+              <!-- <span class="info-list-content" id="phone">010-1234-5678</span> -->
+              <input type="text" class="info-list-content" name="phone" value="<%=user.phone%>" />
+            </span>
+            <span class="info-list">
+              Email:
+              <!-- <span class="info-list-content" id="email">abc@naver.com</span> -->
+              <input type="text" class="info-list-content" name="email" value="<%=user.email%>" />
+            </span>
+          </div>
+          <!-- info-text end -->
+        </div>
+        <!-- info-body end -->
+      </div>
+      <!-- myProfile end -->
 
-    <div class="myAddress">
-      <div class="info-head">
-        Address
+      <div class="myAddress">
+        <div class="info-head">
+          Address
+        </div>
+        <div class="info-body">
+          <span class="info-list">
+            Address:
+            <!-- <span class="info-list-content" id="address"
+              >2, Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan, Republic of Korea</span
+            > -->
+            <input type="text" class="info-list-content" name="address" value="<%=user.address%>" style="width: 60%" />
+          </span>
+          <span class="info-list">
+            Zip Code:
+            <!-- <span class="info-list-content" id="zipcode">46241</span> -->
+            <input type="text" class="info-list-content" name="zipCode" value="<%=user.zipCode%>" />
+          </span>
+        </div>
       </div>
-      <div class="info-body">
-        <span class="info-list">
-          Address:
-          <span class="info-list-content" id="address">2, Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan, Republic of Korea</span>
-        </span>
-        <span class="info-list">
-          Zip Code:
-          <span class="info-list-content" id="zipcode">46241</span>
-        </span>
-      </div>
-    </div> <!-- myAddress end -->
+      <!-- myAddress end -->
 
-    <div class="myAccount">
-      <div class="info-head">
-        Bank Account
+      <div class="text-center">
+        <button id="btn-submit" class="btn btn-primary btn-lg justify-content">프로필 정보 업데이트</button>
       </div>
-      <div class="info-body">
-        <span class="info-list">
-          Bank Name:
-          <span class="info-list-content" id="bankname">Hana Bank</span>
-        </span>
-        <span class="info-list">
-          Account Num:
-          <span class="info-list-content" id="accountnum">88091041739807</span>
-        </span>
-      </div>
-    </div> <!-- myAccount end -->
-  </div> <!-- info-container end -->
+      <!-- <div class="myAccount">
+        <div class="info-head">
+          Bank Account
+        </div>
+        <div class="info-body">
+          <span class="info-list">
+            Bank Name:
+            <span class="info-list-content" id="bankname">Hana Bank</span>
+          </span>
+          <span class="info-list">
+            Account Num:
+            <span class="info-list-content" id="accountnum">88091041739807</span>
+          </span>
+        </div>
+      </div> -->
+      <!-- myAccount end -->
+    </div>
+    <!-- info-container end -->
+  </form>
 
   <!-- Tab-content navigation -->
   <!-- <ul class="nav nav-pills nav-stacked" id="mypageTab" role="tablist" aria-orientation="vertical">
@@ -184,4 +205,42 @@
     <div class="tab-pane fade" id="wishList" role="tabpanel" aria-labelledby="wishList-tab">Wish List</div>
     <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">Wish List</div>
   </div> -->
-</div> <!-- container end -->
+</div>
+<!-- container end -->
+
+<script>
+$('#profile_form').on('submit', function(e) {
+  e.preventDefault();
+
+  var name = $('[name="name"]').val();
+  var phone = $('[name="phone"]').val();
+  var email = $('[name="email"]').val();
+  var address = $('[name="address"]').val();
+  var zipCode = $('[name="zipCode"]').val();
+
+  $.ajax({
+    url: "/api/profile_update",
+    type: "post",
+    dataType: "json",
+    data: {
+      name,
+      phone,
+      email,
+      address,
+      zipCode,
+    },
+    beforeSend: function(xhr) {
+      $('#btn-submit').text('업데이트 중..');
+      // $('#balance').text("잔액 가져오는 중..");
+    },
+    success: function (data) {
+      alert(data.message);
+      $('#btn-submit').text('프로필 정보 업데이트');
+    },
+    fail: function () {
+      $('#btn-submit').text('프로필 정보 업데이트');
+      alert("Error");
+    }
+  });
+});
+</script>

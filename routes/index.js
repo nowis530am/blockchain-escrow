@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-import { Product } from "../models";
+import { Product, User } from "../models";
 
 // index page
 router.get("/", async function(req, res, next) {
@@ -74,21 +74,66 @@ router.get("/pagetest", function(req, res, next) { // URL Endpoint (http://[host
   res.render("pagetest.ejs", { req }); // views폴더에 있는 xxx.ejs 파일을 렌더링. .ejs는 생략가능
 });
 
-router.get("/mypage", function(req, res, next) {
+router.get("/mypage", async function(req, res, next) {
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
+
   res.locals = {
     title: "마이페이지",
     req: req
   };
-  res.render("mypage", { req });
+  
+  let user = await User.findOne({email: req.session.email});
+
+  res.render("mypage", { req, user });
 });
 
-router.get("/saleslist", function(req, res, next) {
+router.get("/wallet", async function(req, res, next) {
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
+
+  res.locals = {
+    title: "지갑",
+    req: req
+  };
+  
+  let user = await User.findOne({email: req.session.email});
+
+  res.render("wallet", { req, user });
+});
+
+router.get("/saleslist", async function(req, res, next) {
+  let user, products;
+  
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
+
   res.locals = {
     title: "판매 목록",
     req: req
   };
-  res.render("saleslist", { req });
+
+  user = await User.findOne({ email: req.session.email });
+  products = await Product.find({user: user._id}).sort({createdAt: -1});
+
+
+  let newProducts = products.map((item1, key1) => {
+    products.map((item2, key2) => {
+      
+    });
+  });
+
+  
+  // console.log(products);
+  res.render("saleslist", { req, products });
 });
+
 
 router.get("/sales_details", function(req, res, next) {
   res.locals = {
@@ -112,14 +157,6 @@ router.get("/purchase_details", function(req, res, next) {
     req: req
   };
   res.render("purchase_details", { req });
-});
-
-router.get("/wallet", function(req, res, next) {
-  res.locals = {
-    title: "지갑",
-    req: req
-  };
-  res.render("wallet", { req });
 });
 
 // This is Temp!! Delete later
