@@ -62,10 +62,11 @@ router.get("/cart", function(req, res, next) {
 });
 
 /*
-*  /pagetest 엔드포인트 요청(request, req)이 들어오면
-*  view폴더에 있는 pagetest.ejs 파일을 렌더링해서 출력한다.
-*/
-router.get("/pagetest", function(req, res, next) { // URL Endpoint (http://[host]:[port]/endpoint)
+ *  /pagetest 엔드포인트 요청(request, req)이 들어오면
+ *  view폴더에 있는 pagetest.ejs 파일을 렌더링해서 출력한다.
+ */
+router.get("/pagetest", function(req, res, next) {
+  // URL Endpoint (http://[host]:[port]/endpoint)
   res.locals = {
     title: "페이지테스트", // 페이지 제목
     req: req // http req 변수. 그냥 넘겨주면 됨.
@@ -84,8 +85,8 @@ router.get("/mypage", async function(req, res, next) {
     title: "마이페이지",
     req: req
   };
-  
-  let user = await User.findOne({email: req.session.email});
+
+  let user = await User.findOne({ email: req.session.email });
 
   res.render("mypage", { req, user });
 });
@@ -100,15 +101,15 @@ router.get("/wallet", async function(req, res, next) {
     title: "지갑",
     req: req
   };
-  
-  let user = await User.findOne({email: req.session.email});
+
+  let user = await User.findOne({ email: req.session.email });
 
   res.render("wallet", { req, user });
 });
 
 router.get("/saleslist", async function(req, res, next) {
   let user, products;
-  
+
   if (!req.session.email) {
     res.redirect("/account/login");
     return;
@@ -120,20 +121,29 @@ router.get("/saleslist", async function(req, res, next) {
   };
 
   user = await User.findOne({ email: req.session.email });
-  products = await Product.find({user: user._id}).sort({createdAt: -1});
+  products = await Product.find({ user: user._id }).sort({ createdAt: -1 });
 
+  // let newProducts = products.map((item1, key1) => {
+  //   products.map((item2, key2) => {
 
-  let newProducts = products.map((item1, key1) => {
-    products.map((item2, key2) => {
-      
-    });
-  });
+  //   });
+  // });
+  // console.log(products);
+  const groupByCreatedAt = groupBy("createdAt");
+  groupByCreatedAt(products);
+  // console.log(groupByCreatedAt(products));
 
-  
   // console.log(products);
   res.render("saleslist", { req, products });
 });
 
+const groupBy = key => array =>
+  array.reduce((objectsByKeyValue, obj) => {
+    console.log("aa");
+    const value = obj[key];
+    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+    return objectsByKeyValue;
+  }, {});
 
 router.get("/sales_details", function(req, res, next) {
   res.locals = {
@@ -176,6 +186,5 @@ router.get("/modal_link_test", function(req, res, next) {
   };
   res.render("modal_link_test", { req });
 });
-
 
 module.exports = router;
