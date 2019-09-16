@@ -308,7 +308,7 @@ router.get("/product_details", async function(req, res, next) {
     console.log("---------------------------");
   } catch(e) {
     console.log(e);
-    res.json({ message: e });
+    res.json({ message: String(e) });
     return;
   }
   
