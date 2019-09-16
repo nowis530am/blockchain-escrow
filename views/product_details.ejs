@@ -213,13 +213,11 @@
 
     <div class="page-header">
       <h2> Product Details </h2>
-      This area will includes <strong>product informations and details.</strong> (ex. brand, Product status, Additional Information, description, Precautions etc.)
     </div>
     <p>
         <%=product.content%>
     </p>
     <div class="page-header">
-      <h2>Customer inquiry</h2>
       <div class="text-center">
         <% for(var i = 0; i < product.images.length; i++) { %>
           <div><img src="<%=product.images[i]%>" alt=""></div>
