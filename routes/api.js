@@ -52,7 +52,9 @@ router.post("/profile_update", upload.fields([{ name: "image" }]), async functio
   user.email = body.email;
   user.address = body.address;
   user.zipCode = body.zipCode;
-  user.profileImagePath = "/uploads/" + req.files.image[0].filename;
+  if(req.files.image) {
+    user.profileImagePath = "/uploads/" + req.files.image[0].filename;
+  }
   await user.save();
 
   // name
@@ -298,9 +300,12 @@ router.post("/product_reg", upload.fields([{ name: "image" }]), async function(r
     product.content = body.content;
     product.price = body.price;
     product.contractAddress = result._address;
-    product.images = req.files.image.map(item => {
-      return "/uploads/" + item.filename;
-    });
+
+    if(req.files.image) {
+      product.images = req.files.image.map(item => {
+        return "/uploads/" + item.filename;
+      });
+    }
     await product.save();
   } catch (e) {
     console.log(e);
