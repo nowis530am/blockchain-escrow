@@ -132,12 +132,12 @@
         <!-- 지갑주소 -->
         <span class="info-list">
           <li>Wallet Address: <br></li>
-          <span class="info-list-content" id="wallet-address">35B8-456F-8EWR-DF1V-ASD1-1FDE</span>
+          <span class="info-list-content" id="walletAddress"><%=user.account.address%></span>
         </span>
 
         <!-- Button trigger modal -->
         <!-- 지갑 주소 생성 Modal Trigger -->
-        <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#makeAccountModal">
+        <button id="btnCreateWalletAddressModal" type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#makeAccountModal">
           <span class="info-list-button"><b>지갑 주소 생성</b></span>
         </button>
 
@@ -161,7 +161,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                 <a href="modal_link_test">
-                  <button type="button" class="btn btn-primary">생성</button>
+                  <button type="button" id="btnCreateWalletAddress" class="btn btn-primary">생성</button>
                 </a>
               </div>
             </div>
@@ -171,7 +171,8 @@
         <!-- 잔액 -->
         <span class="info-list">
           <li>Balance: <br></li>
-          <span class="info-list-content" id="balance">465,157</span>
+          <span class="info-list-content" id="balance">-</span>
+          <span class="btn btn-primary" id="btnBalanceRescan">잔액 다시 조회하기</span>
         </span>
 
         <!-- 돈 보내기 -->
@@ -182,12 +183,12 @@
               <div class="info-sublist">
                 <span>Reciever Wallet Address</span>
               </div>
-              <input type="text" class="form-control" placeholder="456ADSF8152Q21DF81XCX821" name="" value="">
+              <input type="text" class="form-control" placeholder="456ADSF8152Q21DF81XCX821" name="toAddress" value="">
               <div class="info-sublist">
                 <span>Amount</span>
               </div>
-              <input type="number" class="form-control" placeholder="2500" name="" value="">
-              <button class="btn btn-success" type="submit" name="button">Send</button>
+              <input type="number" class="form-control" placeholder="2500" name="amount" value="">
+              <button id="btnSendMoney" class="btn btn-success" type="submit" name="button">Send</button>
             </form>
           </div>
         </span>
@@ -196,10 +197,10 @@
 
       <!-- 거래 내역 -->
       <div class="info-head">
-        Account History
+        Transaction History
       </div> <!-- info-head end -->
       <div class="info-body">
-        <table class="table">
+        <table class="table table-transaction-history">
 
           <!-- tbody가 한 단위임 -->
           <!-- 1번 tbody = 입금 상황 -->
@@ -351,3 +352,205 @@
     </div> <!-- myWallet end -->
   </div> <!-- info-container end -->
 </div> <!-- container end -->
+
+<script>
+var myAddress = "<%=user.account.address%>";
+var htmlIn = '<tbody> \
+  <tr class="transaction-row"> \
+    <th class="non-bordered transaction-head">거래일자</th> \
+    <td class="non-bordered"> \
+      <span>2019-09-12</span> \
+    </td> \
+  </tr> \
+  <tr class="transaction-row"> \
+    <th class="non-bordered transaction-head">TxID</th> \
+    <td class="non-bordered"> \
+      <span>{TXID}</span> \
+    </td> \
+  </tr> \
+  <tr> \
+    <th class="non-bordered transaction-head">사용자</th> \
+    <td class="non-bordered"> \
+      <span>SpongeBob</span> \
+    </td> \
+  </tr> \
+  <tr> \
+    <th class="non-bordered transaction-head">물품명</th> \
+    <td class="non-bordered"> \
+      <span>Headphone</span> \
+    </td> \
+  </tr> \
+  <tr> \
+    <th class="non-bordered transaction-head">상태</th> \
+    <td class="non-bordered"> \
+      <span style="color: green; font-weight: bold;">입금</span> \
+    </td> \
+  </tr> \
+  <tr> \
+    <th class="non-bordered transaction-head">금액</th> \
+    <td class="non-bordered money"> \
+      <span>{VALUE}</span> \
+    </td> \
+  </tr> \
+  <tr> \
+    <th class="non-bordered transaction-head">잔액</th> \
+    <td class="non-bordered"> \
+      <span>464,359</span> \
+    </td> \
+  </tr> \
+</tbody>';
+
+var htmlOut = '<tbody> \
+            <tr class="transaction-row"> \
+              <th class="non-bordered transaction-head">거래일자</th> \
+              <td class="non-bordered"> \
+                <span>2019-09-02</span> \
+              </td> \
+            </tr> \
+            <tr class="transaction-row"> \
+              <th class="non-bordered transaction-head">TxID</th> \
+              <td class="non-bordered"> \
+                <span>{TXID}</span> \
+              </td> \
+            </tr> \
+            <tr> \
+              <th class="non-bordered transaction-head">사용자</th> \
+              <td class="non-bordered"> \
+                <span>Anne</span> \
+              </td> \
+            </tr> \
+            <tr> \
+              <th class="non-bordered transaction-head">물품명</th> \
+              <td class="non-bordered"> \
+                <span>Old Car</span> \
+              </td> \
+            </tr> \
+            <tr> \
+              <th class="non-bordered transaction-head">상태</th> \
+              <td class="non-bordered"> \
+                <span style="color: red; font-weight: bold;">출금</span> \
+              </td> \
+            </tr> \
+            <tr> \
+              <th class="non-bordered transaction-head">금액</th> \
+              <td class="non-bordered money"> \
+                <span>{VALUE}</span> \
+              </td> \
+            </tr> \
+            <tr> \
+              <th class="non-bordered transaction-head">잔액</th> \
+              <td class="non-bordered"> \
+                <span>456,359</span> \
+              </td> \
+            </tr> \
+          </tbody>';
+
+          balanceScan();
+          $('#btnBalanceRescan').on('click', function() {
+            balanceScan();
+          });
+
+          function balanceScan() {
+            $.ajax({
+              url: "/api/balance",
+              type: "get",
+              dataType: "json",
+              data: {
+                
+              },
+              beforeSend: function(xhr) {
+                $('#balance').text("잔액 가져오는 중..");
+              },
+              success: function (data) {
+                $('#balance').text(data.balance + " ETH");
+              },
+              fail: function () {
+                alert("Error");
+              }
+            });
+          }
+
+
+$.ajax({
+  url: "/api/get_transaction_history",
+  type: "get",
+  dataType: "json",
+  global: true,
+  data: {
+    
+  },
+  beforeSend: function(xhr) {
+    $('.table-transaction-history').text("거래내역 가져오는 중..");
+  },
+  success: function (data) {
+    result = data.result.map(function(obj) {
+      if(obj.from == myAddress) {
+        htmlOut = htmlOut.replace("{TXID}", obj.hash);
+        htmlOut = htmlOut.replace("{VALUE}", obj.value);
+        return htmlOut;
+      } else {
+        htmlIn = htmlIn.replace("{TXID}", obj.hash);
+        htmlIn = htmlIn.replace("{VALUE}", obj.value);
+        return htmlIn;
+      }
+    });
+    console.log(data.result);
+    $('.table-transaction-history').html(result);
+  },
+  fail: function () {
+    alert("Error");
+  }
+});
+
+$('#btnCreateWalletAddress').on('click', function(e) {
+  var objThis = $(this);
+  e.preventDefault();
+  
+  $.ajax({
+    url: "/api/create_wallet_address",
+    type: "post",
+    dataType: "json",
+    data: {
+      
+    },
+    beforeSend: function(xhr) {
+      objThis.text("생성중..");
+    },
+    success: function (data) {
+      alert(data.message);
+      $('#makeAccountModal').modal('hide');
+      // $('#btnCreateWalletAddressModal').hide();
+      $('#walletAddress').text(data.address);
+    },
+    fail: function () {
+      alert("Error");
+    }
+  });
+});
+
+$('.send-money').on('submit', function(e) {
+  e.preventDefault();
+  var toAddress = $(this).find('[name=toAddress]').val();
+  var amount = $(this).find('[name=amount]').val();
+  
+  $.ajax({
+    url: "/api/send_money",
+    type: "post",
+    dataType: "json",
+    data: {
+      toAddress,
+      amount
+    },
+    beforeSend: function(xhr) {
+      $('#btnSendMoney').text('보내는 중..');
+    },
+    success: function (data) {
+      alert(data.message);
+      $('#btnSendMoney').text('Send');
+    },
+    fail: function () {
+      alert("Error");
+    }
+  });
+});
+</script>

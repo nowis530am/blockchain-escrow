@@ -3,20 +3,34 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
+    name: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
+    address: {
+      type: String
+    },
+    zipCode: {
+      type: String
+    },
     email: {
       type: String
     },
     password: {
       type: String
     },
-    nickname: {
-      type: String
-    },
     profileImagePath: {
       type: String
     },
-    signature: {
-      type: String
+    account: {
+      address: {
+        type: String
+      },
+      privateKey: {
+        type: String
+      },
     },
     emailConfirmKey: {
       type: String
@@ -24,13 +38,6 @@ const UserSchema = new Schema(
     isValid: {
       type: Boolean,
       default: false
-    },
-    isDeactive: {
-      type: Boolean,
-      default: false
-    },
-    ipAddr: {
-      type: String
     }
   },
   {
