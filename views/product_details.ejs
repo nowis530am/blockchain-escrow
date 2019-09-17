@@ -250,11 +250,13 @@
     e.preventDefault();
 
     $.ajax({
-      url: "/web3/purchase_request",
-      type: "get",
+      url: "/api/purchase_request",
+      type: "post",
       dataType: "json",
       data: {
-
+        productId: "<%=product._id%>",
+        seller: "<%=product.user._id%>",
+        contractAddress: "<%=product.contractAddress%>",
       },
       beforeSend: function(xhr) {
         objBtn.text("로딩중...");

@@ -103,19 +103,19 @@
     <div class="mypage-menu-title">MY PAGE</div>
     <ul class="nav nav-pills nav-stacked">
       <li role="presentation">
-        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+        <a class="nav-link" id="profile-tab" href="/mypage">Profile</a>
       </li>
       <li role="presentation" class="active">
-        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+        <a class="nav-link" id="salesList-tab" href="/saleslist">Sales List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+        <a class="nav-link" id="purchaseList-tab" href="/purchaselist">Purchase List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+        <a class="nav-link" id="wishList-tab" href="/wishlist">Wish List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+        <a class="nav-link" id="wallet-tab" href="/wallet">Wallet</a>
       </li>
     </ul>
   </div>
@@ -137,7 +137,7 @@
       </div> <!-- info-head end -->
       <div class="info-body">
         <div class="product-info-left">
-          <img id="product-img" src="/img/spongebob.png" alt="product-img">
+          <img id="product-img" src="<%=product.images[0]%>" alt="product-img">
         </div>
         <div class="product-info-right">
           <table class="product-info-table">
@@ -147,7 +147,7 @@
                 <th>Product Name:</th>
               </tr>
               <tr class="info-content">
-                <td id="product-name">SpongeBob</td>
+                <td id="product-name"><%=product.title%></td>
               </tr>
               <tr>
                 <td><br></td> <!--For empty row-->
@@ -158,7 +158,7 @@
                 <th>Price:</th>
               </tr>
               <tr class="info-content">
-                <td id="price">$100,000</td>
+                <td id="price">$<%=product.price%></td>
               </tr>
               <tr>
                 <td><br></td> <!--For empty row-->
@@ -169,7 +169,7 @@
                 <th>Upload date:</th>
               </tr>
               <tr class="info-content">
-                <td id="date">2019/09/12</td>
+                <td id="date"><%=product.createdAt%></td>
               </tr>
               <tr>
                 <td><br></td> <!--For empty row-->
@@ -180,7 +180,7 @@
                 <th>Sales Number:</th>
               </tr>
               <tr class="info-content">
-                <td id="sales-number">2019091212345</td>
+                <td id="sales-number"><%=product._id%></td>
               </tr>
               <tr>
                 <td><br></td> <!--For empty row-->
@@ -190,6 +190,7 @@
         </div> <!-- product-info-right end -->
       </div> <!-- info-body end -->
 
+      <% if(transaction) { %>
       <div class="info-head">
         Buyer Info
       </div> <!-- info-head end -->
@@ -198,15 +199,15 @@
           <tbody>
             <tr>
               <th class="buyer-info-list">구매자</th>
-              <td id="buyer-name">Mark</td>
+              <td id="buyer-name"><%=transaction.buyer.name%></td>
             </tr>
             <tr>
               <th class="buyer-info-list">연락처</th>
-              <td id="buyer-phone">010-1234-5678</td>
+              <td id="buyer-phone"><%=transaction.buyer.phone%></td>
             </tr>
             <tr>
               <th class="buyer-info-list">주소</th>
-              <td id="buyer-address">2, Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan, Republic of Korea</td>
+              <td id="buyer-address"><%=transaction.buyer.address%></td>
             </tr>
             <tr>
               <th class="buyer-info-list">요청사항</th>
@@ -214,7 +215,7 @@
             </tr>
             <tr>
               <th class="buyer-info-list">구매일자</th>
-              <td id="buyer-buydate">2019/09/15</td>
+              <td id="buyer-buydate"><%=transaction.createdAt%></td>
             </tr>
             <tr>
               <td><br></td>
@@ -223,6 +224,7 @@
           </tbody>
         </table>
       </div> <!-- info-body end -->
+      <% } %>
 
       <div class="info-head">
         Sales status

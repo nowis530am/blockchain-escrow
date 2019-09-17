@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 import moment from "moment";
 
-import { Product, User } from "../models";
+import { Product, User, Transaction } from "../models";
 
 // index page
 router.get("/", async function(req, res, next) {
@@ -133,7 +133,7 @@ router.get("/saleslist", async function(req, res, next) {
   // console.log(products);
   const groupByCreatedAt = groupBy("createdAt");
   products = groupByCreatedAt(products);
-  
+
   // console.log(groupByCreatedAt(products));
 
   // console.log(products);
@@ -143,33 +143,74 @@ router.get("/saleslist", async function(req, res, next) {
 const groupBy = key => array =>
   array.reduce((objectsByKeyValue, obj) => {
     let value = obj[key];
-    value = moment(value).format("YYYY/MM/DD")
+    value = moment(value).format("YYYY/MM/DD");
     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
     return objectsByKeyValue;
   }, {});
 
-router.get("/sales_details", function(req, res, next) {
-  res.locals = {
-    title: "판매 상세",
-    req: req
-  };
-  res.render("sales_details", { req });
-});
 
-router.get("/purchaselist", function(req, res, next) {
+router.get("/purchaselist", async function(req, res, next) {
+  let user, products, transactions;
+
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
+
   res.locals = {
     title: "구매 목록",
     req: req
   };
-  res.render("purchaselist", { req });
+
+  user = await User.findOne({ email: req.session.email });
+
+  transactions = await Transaction.find({ buyer: user._id })
+    .sort({ createdAt: -1 })
+    .populate("buyer")
+    .populate("seller")
+    .populate("product");
+
+  // products = await Product.find({ user: user._id }).sort({ createdAt: -1 });
+
+  const groupByCreatedAt = groupBy("createdAt");
+  transactions = groupByCreatedAt(transactions);
+
+  res.render("purchaselist", { req, transactions });
 });
 
-router.get("/purchase_details", function(req, res, next) {
+router.get("/sales_details/:_id", async function(req, res, next) {
+  let product, transaction;
+
+  res.locals = {
+    title: "판매 상세",
+    req: req
+  };
+  transaction = await Transaction.findOne({ product: req.params._id })
+  .populate("buyer")
+  .populate("seller")
+  .populate("product");
+
+  product = await Product.findOne({ _id: req.params._id })
+  .populate("user");
+
+  res.render("sales_details", { req, product, transaction });
+});
+
+router.get("/purchase_details/:_id", async function(req, res, next) {
+  let product;
+
   res.locals = {
     title: "주문 상세",
     req: req
   };
-  res.render("purchase_details", { req });
+  transaction = await Transaction.findOne({ _id: req.params._id })
+  .populate("buyer")
+  .populate("seller")
+  .populate("product");
+  product = await Product.findOne({ _id: transaction.product._id })
+  .populate("user");;
+
+  res.render("purchase_details", { req, product, transaction });
 });
 
 // This is Temp!! Delete later

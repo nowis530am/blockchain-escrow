@@ -1,6 +1,6 @@
 import express from "express";
 import Web3 from "web3";
-import { Product, User } from "../models";
+import { Product, User, Transaction } from "../models";
 import config from "../config";
 import multer from "multer";
 const upload = multer({
@@ -52,7 +52,7 @@ router.post("/profile_update", upload.fields([{ name: "image" }]), async functio
   user.email = body.email;
   user.address = body.address;
   user.zipCode = body.zipCode;
-  if(req.files.image) {
+  if (req.files.image) {
     user.profileImagePath = "/uploads/" + req.files.image[0].filename;
   }
   await user.save();
@@ -301,7 +301,7 @@ router.post("/product_reg", upload.fields([{ name: "image" }]), async function(r
     product.price = body.price;
     product.contractAddress = result._address;
 
-    if(req.files.image) {
+    if (req.files.image) {
       product.images = req.files.image.map(item => {
         return "/uploads/" + item.filename;
       });
@@ -309,7 +309,7 @@ router.post("/product_reg", upload.fields([{ name: "image" }]), async function(r
     await product.save();
   } catch (e) {
     console.log(e);
-    res.json({ message: "에러" });
+    res.json({ message: "에러, 잔액이 충분한지 확인해주세요." });
     return;
   }
 
@@ -364,12 +364,65 @@ router.get("/product_details", async function(req, res, next) {
   res.json({ message: "등록 완료" });
 });
 
-router.post("/purchase_request", function(req, res, next) {
-  let body;
-
+router.post("/purchase_request", async function(req, res, next) {
+  let result, buyer, seller, escrowContract, transaction, body;
+  // if (!req.session.email) {
+  //   res.json({ message: "로그인 해주세요." });
+  //   return;
+  // }
   body = req.body;
 
-  res.json({ message: "등록 완료" });
+  if (!req.session.email) {
+    res.json({ success: false, message: "로그인 해주세요." });
+    return;
+  }
+
+  try {
+    buyer = await User.findOne({ email: req.session.email });
+    seller = await User.findOne({ _id: body.seller });
+
+
+    transaction = await Transaction.findOne({product: body.productId});
+    if (transaction._id) {
+      res.json({ success: false, message: "이미 구입요청을 보내었습니다." });
+      return;
+    }
+
+    // address = await web3.eth.getAccounts();
+    // balance = await web3.utils.fromWei(await web3.eth.getBalance(address[0]), "ether");
+    // await web3.eth.personal.unlockAccount(address[0], "", 600);
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, body.contractAddress);
+
+    // result = await escrowContract.methods.purchase_request().call();
+    // console.log(result);
+    // result = await escrowContract.methods.sayHello().call();
+    // console.log(result);
+
+    transaction = new Transaction();
+    transaction.seller = buyer._id;
+    transaction.buyer = seller._id;
+    transaction.product = body.productId;
+    await transaction.save();
+    // let aacontract = new web3.eth.Contract(calculatorABI);
+    // result = await escrowContract
+    //   .deploy({
+    //     data: config.contracts.escrow.BYTECODE,
+    //     arguments: [100000] //생성자 params => uint _price
+    //   })
+    //   .send({
+    //     from: address[0],
+    //     gasPrice: "1000",
+    //     gas: 4700000
+    //   });
+    // console.log(result._address);
+  } catch (e) {
+    console.log(e);
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "구입요청이 승인되었습니다."
+  });
 });
 
 module.exports = router;

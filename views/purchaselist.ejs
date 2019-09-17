@@ -109,19 +109,19 @@
     <div class="mypage-menu-title">MY PAGE</div>
     <ul class="nav nav-pills nav-stacked">
       <li role="presentation">
-        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+        <a class="nav-link" id="profile-tab" href="/mypage">Profile</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+        <a class="nav-link" id="salesList-tab" href="/saleslist">Sales List</a>
       </li>
       <li role="presentation" class="active">
-        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+        <a class="nav-link" id="purchaseList-tab" href="/purchaselist">Purchase List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+        <a class="nav-link" id="wishList-tab" href="/wishlist">Wish List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+        <a class="nav-link" id="wallet-tab" href="/wallet">Wallet</a>
       </li>
     </ul>
   </div>
@@ -131,180 +131,61 @@
       <div class="info-head">
         Purchase List
       </div>
+      <div>
+        <pre>
+          주문상태
+          start: 주문 접수
+          shipped: 발송됨
+          cancel: 취소됨
+        </pre>
+      </div>
       <div class="info-body">
-        <!-- listbox includes "date, item list". It can be added. -->
-        <div class="listbox">
-          <div class="sales-info">
-            Purchase Date: &nbsp;
-            <span class="sales-date">2019/09/12</span>
-          </div>
-          <!-- item includes "item-img, item title, price, details, status" It can be added. -->
-          <!-- status order
-                1) Pending: 주문 대기
-                2) In progress: 주문 처리 중
-                3) Shipped: 발송됨
-                4) In transit: 배송 중
-                5) Delivered: 배송 완료
-                +) Tracking number: 택배 송장 번호
-                +) Estimated Delivery: 상품 배송 예정일자
-                +) Pending Shipment: 배송 대기
-                +) Cancelled: 주문 취소
-          -->
-          <div class="item">
-            <a href="product_details_temp">
-              <img id="item-img"src="img/spongebob.png" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details_temp">[SpongeBob SquarePants] Shy boy Sponge Bob</a>
-              </span>
-              <span class="item-price">
-                $100,000
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 주문 대기 -->
-              <span id="status">Pending</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
+          <% for(var date in transactions) {%>
+            <!-- listbox includes "date, item list". It can be added. -->
+            <div class="listbox">
+                <div class="sales-info">
+                  Sales Date: &nbsp;
+                  <span class="sales-date"><%=date%></span>
+                </div>
+                <!-- item includes "item-img, item title, price, details, status" It can be added. -->
+                <!-- status order
+                      1) Pending: 주문 대기
+                      2) In progress: 주문 처리 중
+                      3) Shipped: 발송됨
+                      4) In transit: 배송 중
+                      5) Delivered: 배송 완료
+                      +) Tracking number: 택배 송장 번호
+                      +) Estimated Delivery: 상품 배송 예정일자
+                      +) Pending Shipment: 배송 대기
+                      +) Cancelled: 주문 취소
+                -->
+                <% transactions[date].forEach(function(transaction) { %>
+                <div class="item">
+                  <a href="/product_details/<%=transaction.product._id%>">
+                    <img id="item-img" src="<%= (transaction.product.images.length>0) ? transaction.product.images[0] : '' %>" alt="product_img">
+                  </a>
+                  <div class="item-content">
+                    <span class="itme-title">
+                      <a href="/product_details/<%=transaction.product._id%>"><%=transaction.product.title%></a>
+                    </span>
+                    <span class="item-price">
+                      <%=transaction.product.price%> ETH
+                    </span>
+                  </div>
+                  <div class="sales-status">
+                    <!-- 판매 중 -->
+                    <span id="status"><%=transaction.status%></span>
+                    <p>
+                      <a href="/purchase_details/<%=transaction._id%>">
+                        <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <% }) %>
+              </div> <!-- listbox end -->
+          <%} %>
 
-          <div class="item">
-            <a href="product_details">
-              <img id="item-img"src="img/thumbnail_6.jpg" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details">My old bicycle</a>
-              </span>
-              <span class="item-price">
-                $50,000
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 주문 처리 중 -->
-              <span id="status">In progress</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div class="item">
-            <a href="product_details">
-              <img id="item-img"src="img/thumbnail_7.jpg" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details">Play Station 4</a>
-              </span>
-              <span class="item-price">
-                $1,000
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 발송됨 -->
-              <span id="status">Shipped</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
-
-        </div> <!-- listbox end -->
-
-        <div class="listbox">
-          <div class="sales-info">
-            Purchase Date: &nbsp;
-            <span class="sales-date">2019/09/10</span>
-          </div>
-
-          <div class="item">
-            <a href="product_details">
-              <img id="item-img"src="img/thumbnail_8.jpg" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details">Soccer shoes</a>
-              </span>
-              <span class="item-price">
-                $100
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 배송완료-->
-              <span id="status">Delivered</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div class="item">
-            <a href="product_details">
-              <img id="item-img"src="img/thumbnail_9.jpg" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details">airpod 2 (New)</a>
-              </span>
-              <span class="item-price">
-                $2,000
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 배송완료 -->
-              <span id="status">Delivered</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div> <!-- listbox end -->
-
-        <div class="listbox">
-          <div class="sales-info">
-            Purchase Date: &nbsp;
-            <span class="sales-date">2019/09/06</span>
-          </div>
-
-
-          <div class="item">
-            <a href="product_details">
-              <img id="item-img"src="img/thumbnail_1.jpg" alt="product_img">
-            </a>
-            <div class="item-content">
-              <span class="itme-title">
-                <a href="product_details">My Old Car</a>
-              </span>
-              <span class="item-price">
-                $200,000
-              </span>
-            </div>
-            <div class="sales-status">
-              <!-- 주문 취소 -->
-              <span id="status">Cancelled</span>
-              <p>
-                <a href="purchase_details">
-                  <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
-                </a>
-              </p>
-            </div>
-          </div>
-
-        </div> <!-- listbox end -->
 
 
 

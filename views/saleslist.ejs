@@ -109,19 +109,19 @@
     <div class="mypage-menu-title">MY PAGE</div>
     <ul class="nav nav-pills nav-stacked">
       <li role="presentation">
-        <a class="nav-link" id="profile-tab" href="mypage">Profile</a>
+        <a class="nav-link" id="profile-tab" href="/mypage">Profile</a>
       </li>
       <li role="presentation" class="active">
-        <a class="nav-link" id="salesList-tab" href="saleslist">Sales List</a>
+        <a class="nav-link" id="salesList-tab" href="/saleslist">Sales List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="purchaseList-tab" href="purchaselist">Purchase List</a>
+        <a class="nav-link" id="purchaseList-tab" href="/purchaselist">Purchase List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wishList-tab" href="wishlist">Wish List</a>
+        <a class="nav-link" id="wishList-tab" href="/wishlist">Wish List</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" id="wallet-tab" href="wallet">Wallet</a>
+        <a class="nav-link" id="wallet-tab" href="/wallet">Wallet</a>
       </li>
     </ul>
   </div>
@@ -152,24 +152,23 @@
                       +) Cancelled: 주문 취소
                 -->
                 <% products[date].forEach(function(product) { %>
-                <script>console.log();</script>
                 <div class="item">
-                  <a href="product_details_temp">
+                  <a href="/product_details/<%=product._id%>">
                     <img id="item-img" src="<%= (product.images.length>0) ? product.images[0] : '' %>" alt="product_img">
                   </a>
                   <div class="item-content">
                     <span class="itme-title">
-                      <a href="product_details_temp"><%=product.title%></a>
+                      <a href="/product_details/<%=product._id%>"><%=product.title%></a>
                     </span>
                     <span class="item-price">
-                      <%=product.price%>
+                      <%=product.price%> ETH
                     </span>
                   </div>
                   <div class="sales-status">
                     <!-- 판매 중 -->
                     <span id="status">On sale</span>
                     <p>
-                      <a href="sales_details">
+                      <a href="sales_details/<%=product._id%>">
                         <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
                       </a>
                     </p>
