@@ -1,10 +1,12 @@
 var express = require("express");
 var router = express.Router();
+import moment from "moment";
+
 import { Product, User } from "../models";
 
 // index page
 router.get("/", async function(req, res, next) {
-  let products = await Product.find().sort({ _id: -1 });
+  let products = await Product.find().sort({ createdAt: -1 });
 
   res.locals = {
     title: "[Project]NOW IS 05:30 AM - 중고거래 메인",
@@ -130,7 +132,8 @@ router.get("/saleslist", async function(req, res, next) {
   // });
   // console.log(products);
   const groupByCreatedAt = groupBy("createdAt");
-  groupByCreatedAt(products);
+  products = groupByCreatedAt(products);
+  
   // console.log(groupByCreatedAt(products));
 
   // console.log(products);
@@ -139,8 +142,8 @@ router.get("/saleslist", async function(req, res, next) {
 
 const groupBy = key => array =>
   array.reduce((objectsByKeyValue, obj) => {
-    const value = obj[key];
-    console.log(value);
+    let value = obj[key];
+    value = moment(value).format("YYYY/MM/DD")
     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
     return objectsByKeyValue;
   }, {});
