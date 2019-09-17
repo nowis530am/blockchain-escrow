@@ -19,7 +19,7 @@ mongoose.conn.on('disconnected', () => console.log(`Mongoose ${config.db_uri} co
 /**
  * MONGODB TERMINATE CONNECTION
  */
-// If the Node process ends, close the Mongoose connection
+// 강제종료시 커넥션 종료
 process.on('SIGINT', () => {
     mongoose.main_conn.close(() => console.log('Mongoose default connection disconnected through app termination'));
     mongoose.logger_conn.close(() => {

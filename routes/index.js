@@ -139,8 +139,8 @@ router.get("/saleslist", async function(req, res, next) {
 
 const groupBy = key => array =>
   array.reduce((objectsByKeyValue, obj) => {
-    console.log("aa");
     const value = obj[key];
+    console.log(value);
     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
     return objectsByKeyValue;
   }, {});
