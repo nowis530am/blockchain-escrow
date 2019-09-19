@@ -131,14 +131,6 @@
       <div class="info-head">
         Purchase List
       </div>
-      <div>
-        <pre>
-          주문상태
-          start: 주문 접수
-          shipped: 발송됨
-          cancel: 취소됨
-        </pre>
-      </div>
       <div class="info-body">
           <% for(var date in transactions) {%>
             <!-- listbox includes "date, item list". It can be added. -->
@@ -174,7 +166,36 @@
                   </div>
                   <div class="sales-status">
                     <!-- 판매 중 -->
-                    <span id="status"><%=transaction.status%></span>
+                    <span id="status">
+                      <% 
+                      switch(transaction.state) {
+                        case 'start':
+                      %>
+                      -
+                      <%
+                        break;
+                        case 'processing':
+                      %>
+                      <span class="text-info">
+                        구매진행중
+                      </span>
+                      <%
+                        break;
+                        case 'cancel':
+                      %>
+                      <span class="text-danger">거래취소됨</span>
+                      <%
+                        break;
+                        case 'success':
+                      %>
+                      <span class="text-success">
+                        거래확정
+                      </span>
+                      <%
+                        break;
+                      }
+                      %>
+                    </span>
                     <p>
                       <a href="/purchase_details/<%=transaction._id%>">
                         <button class="btn btn-info btn-sm" type="button" name="button">Details</button>

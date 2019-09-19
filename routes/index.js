@@ -21,11 +21,13 @@ router.get("/", async function(req, res, next) {
 router.get("/product_details/:_id", async function(req, res, next) {
   try {
     let product = await Product.findOne({ _id: req.params._id }).populate("user");
+    let transaction = await Transaction.findOne({ product: req.params._id }).populate("buyer").populate("seller");
 
     res.locals = {
       title: "물품 상세",
       req: req,
-      product
+      product,
+      transaction
     };
 
     res.render("product_details", { req });
@@ -170,8 +172,6 @@ router.get("/purchaselist", async function(req, res, next) {
     .populate("seller")
     .populate("product");
 
-  // products = await Product.find({ user: user._id }).sort({ createdAt: -1 });
-
   const groupByCreatedAt = groupBy("createdAt");
   transactions = groupByCreatedAt(transactions);
 
@@ -196,8 +196,11 @@ router.get("/sales_details/:_id", async function(req, res, next) {
   res.render("sales_details", { req, product, transaction });
 });
 
+/**
+ * 구매상세
+ */
 router.get("/purchase_details/:_id", async function(req, res, next) {
-  let product;
+  let product, transaction;
 
   res.locals = {
     title: "주문 상세",
@@ -208,7 +211,7 @@ router.get("/purchase_details/:_id", async function(req, res, next) {
   .populate("seller")
   .populate("product");
   product = await Product.findOne({ _id: transaction.product._id })
-  .populate("user");;
+  .populate("user");
 
   res.render("purchase_details", { req, product, transaction });
 });

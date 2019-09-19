@@ -206,8 +206,15 @@
             </div>
           </div>
         </div> <!-- modal end -->
-
-        <button id="btn-purchase" type="button" class="btn btn-lg btn-primary" style="width:100%;"><span>구매하기</span></button>
+        <% if(transaction.state == 'start') { %>
+          <button id="btn-purchase" type="button" class="btn btn-lg btn-primary" style="width:100%;"><span>구매하기</span></button>
+        <% } else if(transaction.state == 'processing') { %>
+          <button disabled id="btn-purchase" type="button" class="btn btn-lg btn-warning" style="width:100%;"><span>거래진행중</span></button>
+        <% } else if(transaction.state == 'cancel') { %>
+          <button disabled id="btn-purchase" type="button" class="btn btn-lg btn-danger" style="width:100%;"><span>취소된거래</span></button>
+        <% } else if(transaction.state == 'success') { %>
+          <button disabled id="btn-purchase" type="button" class="btn btn-lg btn-success" style="width:100%;"><span>완료된거래</span></button>
+        <% } %>
       </div>
     </div> <!-- product-info end   -->
 
@@ -228,23 +235,6 @@
   </div> <!--container end -->
 
   <script>
-    $.ajax({
-      url: "/api/product_details",
-      type: "get",
-      dataType: "json",
-      data: {
-        contractAddress: "<%=product.contractAddress%>"
-      },
-      beforeSend: function(xhr) {
-      },
-      success: function (data) {
-        alert(data.message);
-      },
-      fail: function () {
-        alert("Error");
-      }
-    });
-
   $('#btn-purchase').on('click', function(e) {
     objBtn = $(this);
     e.preventDefault();
@@ -259,11 +249,12 @@
         contractAddress: "<%=product.contractAddress%>",
       },
       beforeSend: function(xhr) {
-        objBtn.text("로딩중...");
+        objBtn.text("구입요청 중...");
       },
       success: function (data) {
-        objBtn.text("구매하기");
+        objBtn.text("요청완료");
         alert(data.message);
+        location.reload();
       },
       fail: function () {
         alert("Error");

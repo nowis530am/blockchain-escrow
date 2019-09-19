@@ -15,7 +15,7 @@ const TransactionSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId, 
       ref: "Product"
     },
-    status: {
+    state: {
       type: String,
       default: "start",
     }
