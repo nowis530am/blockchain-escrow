@@ -154,7 +154,7 @@
                 <% transactions[date].forEach(function(transaction) { %>
                 <div class="item">
                   <a href="/product_details/<%=transaction.product._id%>">
-                    <img id="item-img" src="<%= (transaction.product.images.length>0) ? product.images[0] : '' %>" alt="product_img">
+                    <img id="item-img" src="<%= (transaction.product.images.length>0) ? transaction.product.images[0] : '' %>" alt="product_img">
                   </a>
                   <div class="item-content">
                     <span class="itme-title">
@@ -172,7 +172,7 @@
                         switch(transaction.state) {
                           case 'start':
                         %>
-                        -
+                        판매중
                         <%
                           break;
                           case 'processing':

@@ -32,6 +32,7 @@ router.post("/login", async function(req, res, next) {
     if(user) {
       req.session._id = user._id;
       req.session.email = user.email;
+      req.session.name = user.name;
       res.redirect("/");
     } else {
       req.errorMessage.push("존재하지 않거나 이메일/비밀번호가 다릅니다.");

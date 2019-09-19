@@ -105,7 +105,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/product_reg" id="product-registration">Product registration</a></li>
             <% if(req.session.email) { %>
-              <li><a href="/mypage"><%=req.session.email%> (My Page)</a></li>
+              <li><a href="/mypage"><%=req.session.email%> <%=req.session.name%> (My Page)</a></li>
               <li><a href="/account/logout">Logout</a></li>
             <% } else { %>
               <li><a href="/account/login">Log in</a></li>

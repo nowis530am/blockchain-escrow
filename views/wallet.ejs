@@ -357,12 +357,6 @@
 var myAddress = "<%=user.account.address%>";
 var htmlIn = '<tbody> \
   <tr class="transaction-row"> \
-    <th class="non-bordered transaction-head">거래일자</th> \
-    <td class="non-bordered"> \
-      <span>2019-09-12</span> \
-    </td> \
-  </tr> \
-  <tr class="transaction-row"> \
     <th class="non-bordered transaction-head">TxID</th> \
     <td class="non-bordered"> \
       <span>{TXID}</span> \
@@ -371,13 +365,7 @@ var htmlIn = '<tbody> \
   <tr> \
     <th class="non-bordered transaction-head">사용자</th> \
     <td class="non-bordered"> \
-      <span>SpongeBob</span> \
-    </td> \
-  </tr> \
-  <tr> \
-    <th class="non-bordered transaction-head">물품명</th> \
-    <td class="non-bordered"> \
-      <span>Headphone</span> \
+      <span>{NAME}</span> \
     </td> \
   </tr> \
   <tr> \
@@ -389,24 +377,12 @@ var htmlIn = '<tbody> \
   <tr> \
     <th class="non-bordered transaction-head">금액</th> \
     <td class="non-bordered money"> \
-      <span>{VALUE}</span> \
-    </td> \
-  </tr> \
-  <tr> \
-    <th class="non-bordered transaction-head">잔액</th> \
-    <td class="non-bordered"> \
-      <span>464,359</span> \
+      <span>{VALUE} ETH</span> \
     </td> \
   </tr> \
 </tbody>';
 
 var htmlOut = '<tbody> \
-            <tr class="transaction-row"> \
-              <th class="non-bordered transaction-head">거래일자</th> \
-              <td class="non-bordered"> \
-                <span>2019-09-02</span> \
-              </td> \
-            </tr> \
             <tr class="transaction-row"> \
               <th class="non-bordered transaction-head">TxID</th> \
               <td class="non-bordered"> \
@@ -416,13 +392,7 @@ var htmlOut = '<tbody> \
             <tr> \
               <th class="non-bordered transaction-head">사용자</th> \
               <td class="non-bordered"> \
-                <span>Anne</span> \
-              </td> \
-            </tr> \
-            <tr> \
-              <th class="non-bordered transaction-head">물품명</th> \
-              <td class="non-bordered"> \
-                <span>Old Car</span> \
+                <span>{NAME}</span> \
               </td> \
             </tr> \
             <tr> \
@@ -435,12 +405,6 @@ var htmlOut = '<tbody> \
               <th class="non-bordered transaction-head">금액</th> \
               <td class="non-bordered money"> \
                 <span>{VALUE} ETH</span> \
-              </td> \
-            </tr> \
-            <tr> \
-              <th class="non-bordered transaction-head">잔액</th> \
-              <td class="non-bordered"> \
-                <span>456,359</span> \
               </td> \
             </tr> \
           </tbody>';
@@ -484,14 +448,29 @@ $.ajax({
   },
   success: function (data) {
     result = data.result.map(function(obj) {
+      if(obj == undefined) {
+        return;
+      }
+
+      let newHtml;
       if(obj.from == myAddress) {
-        htmlOut = htmlOut.replace("{TXID}", obj.hash);
-        htmlOut = htmlOut.replace("{VALUE}", obj.value);
-        return htmlOut;
+        newHtml = htmlOut;
+        newHtml = newHtml.replace("{TXID}", obj.hash);
+        newHtml = newHtml.replace("{VALUE}", obj.value);
+        if(obj.user != null)
+          newHtml = newHtml.replace("{NAME}", obj.user.name);
+        else
+          newHtml = newHtml.replace("{NAME}", "-");
+        return newHtml;
       } else {
-        htmlIn = htmlIn.replace("{TXID}", obj.hash);
-        htmlIn = htmlIn.replace("{VALUE}", obj.value);
-        return htmlIn;
+        newHtml = htmlIn;
+        newHtml = newHtml.replace("{TXID}", obj.hash);
+        newHtml = newHtml.replace("{VALUE}", obj.value);
+        if(obj.user != null)
+          newHtml = newHtml.replace("{NAME}", obj.user.name);
+        else
+          newHtml = newHtml.replace("{NAME}", "-");
+        return newHtml;
       }
     });
     console.log(data.result);

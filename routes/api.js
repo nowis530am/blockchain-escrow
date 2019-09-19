@@ -1,6 +1,6 @@
 import express from "express";
 import Web3 from "web3";
-import { Product, User, Transaction } from "../models";
+import { Product, User, Transaction, BlockTransaction } from "../models";
 import config from "../config";
 import multer from "multer";
 
@@ -38,8 +38,16 @@ var subscription = web3.eth
   .subscribe("pendingTransactions", function(error, result) {
     if (error) console.log(error);
   })
-  .on("data", function(transaction) {
-    console.log("pendingTransaction: " + transaction);
+  .on("data", async function(txId) {
+    // console.log("pendingTransaction: " + txId);
+    // console.log(transaction);
+    let transaction = await web3.eth.getTransaction(txId);
+    let blockTransaction = new BlockTransaction();
+    blockTransaction.hash = transaction.hash;
+    blockTransaction.from = transaction.from;
+    blockTransaction.to = transaction.to;
+    blockTransaction.value = transaction.value;
+    await blockTransaction.save();
   });
 
 // unsubscribes the subscription
@@ -200,21 +208,60 @@ router.get("/get_transaction_history", async function(req, res, next) {
   body = req.body;
   user = await User.findOne({ email: req.session.email });
   console.log(user.account.address);
-
+  
   try {
-    result = await getTransactionsByAccount(user.account.address);
-    console.log(result);
+    result = await BlockTransaction.find({
+      $or : [{
+        from: {
+          "$regex" : user.account.address, 
+          "$options" : "i"
+        }
+      }, {
+        to: {
+          "$regex" : user.account.address, 
+          "$options" : "i"
+        }
+      }]
+    }).sort({createdAt: -1});
+
+    const mappingFunction = (result) => {
+      const promises = result.map(async (item) => {
+        item.value = web3.utils.fromWei(item.value, "ether");
+        if("0" == item.value) {
+          return;
+        }
+        //출금
+        if(user.account.address == item.to) {
+          item.user = await User.findOne({
+            "account.address": item.from
+          });
+        //입금
+        } else {
+          item.user = await User.findOne({
+            "account.address": item.to
+          });
+        }
+        return item;
+      });
+      return Promise.all(promises);
+    }
+
+    result = await mappingFunction(result);
+    // result = await getTransactionsByAccount(user.account.address);
+    // console.log(result);
     // result = await web3.eth.getPastLogs({fromBlock:'0x0', address:user.account.address})
     // result.forEach(rec => {
     //   console.log(rec.blockNumber, rec.transactionHash, rec.topics);
     // });
+    res.json({ result });
   } catch (e) {
     console.log(e);
+    res.json({ message: "오류발생: " + e });
+    return;
   }
-
-  res.json({ result });
 });
 
+// 블록 검색하여 입출금 트랜잭션 가져오기 
 async function getTransactionsByAccount(
   myaccount,
   startBlockNumber,
@@ -239,14 +286,30 @@ async function getTransactionsByAccount(
   );
 
   for (var i = startBlockNumber; i <= endBlockNumber; i++) {
+    let product, user;
     if (i % 1000 == 0) {
       console.log("Searching block " + i);
     }
     var block = await web3.eth.getBlock(i, true);
     if (block != null && block.transactions != null) {
-      block.transactions.forEach(function(e) {
-        if (myaccount == "*" || myaccount == e.from || myaccount == e.to) {
+      await block.transactions.forEach(async function(e) {
+        // console.log(e.from + " - " + myaccount);
+        if (myaccount == "*" || myaccount == e.from.toLowerCase() || myaccount == e.to.toLowerCase()) {
+          if(e.value == 0) {
+            //스마트 컨트랙트
+            product = await Product.findOne({contractAddress: e.to}).populate('user');
+            e.product = product;
+            if(!product)
+              return;
+          } else {
+            //입출금
+            e.fromUser = await User.findOne({ _id: e.from });
+            e.toUser = await User.findOne({ _id: e.to });
+          }
+
+          e.value = web3.utils.fromWei(e.value, "ether");
           result.push(e);
+          console.log(e);
           console.log(
             "  tx hash          : " +
               e.hash +
@@ -586,9 +649,11 @@ router.post("/purchase_confirm", async function(req, res, next) {
     );
 
     // 구매 확정 함수 호출
-    result = await escrowContract.methods.buyer_receive(transaction.inputNumber).send({
-      from: buyer.account.address
-    });
+    result = await escrowContract.methods
+      .buyer_receive(transaction.inputNumber)
+      .send({
+        from: buyer.account.address
+      });
 
     console.log(result);
 
@@ -614,7 +679,7 @@ router.post("/purchase_confirm", async function(req, res, next) {
 });
 
 /**
- * 구매자 구매 취소 
+ * 구매자 구매 취소
  */
 router.post("/purchase_cancel", async function(req, res, next) {
   // 변수들 미리 세팅
@@ -681,52 +746,3 @@ router.post("/purchase_cancel", async function(req, res, next) {
 });
 
 module.exports = router;
-
-// 물품관련 끝
-
-// router.get("/product_details", async function(req, res, next) {
-//   let body, query, user, result, escrowContract;
-//   query = req.query;
-
-//   try {
-//     // var testSource='contract Test {  function double(int a) constant returns(int) { return 2*a; } }'
-//     // var testCompiled = await web3.eth.compile.solidity(testSource);
-//     // console.log(testCompiled);
-
-//     user = await User.findOne({ email: req.session.email });
-
-//     console.log("---------------------------");
-//     console.log(query.contractAddress);
-//     // await web3.eth.personal.unlockAccount(address[0], "", 600);
-//     escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, query.contractAddress);
-//     //query.contractAddress
-//     //config.contracts.escrow.receiveAddress
-//     // result = await escrowContract.methods.purchase_request().call();
-//     // console.log(result);
-//     result = await escrowContract.methods.sayHello().call();
-//     console.log(result);
-//     result = await escrowContract.methods.getNumber().call();
-//     console.log("number: " + result);
-//     result = await escrowContract.methods.input_number(112233).call({ from: user.account.address });
-//     console.log(result);
-//     result = await escrowContract.methods.getNumber().call();
-//     console.log("number: " + result);
-//     result = await escrowContract.methods.getPay().call();
-//     console.log("pay: " + result);
-//     result = await escrowContract.methods.getPrice().call();
-//     console.log("price: " + result);
-//     result = await escrowContract.methods.getState().call();
-//     console.log("state: " + result);
-//     // result = await escrowContract.methods.purchase_request().call({ from: user.account.address });
-//     // console.log(result);
-//     result = await escrowContract.methods.getState().call();
-//     console.log("state: " + result);
-//     console.log("---------------------------");
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ message: String(e) });
-//     return;
-//   }
-
-//   res.json({ message: "등록 완료" });
-// });
