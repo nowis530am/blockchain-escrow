@@ -388,8 +388,6 @@
         </table>
       </div> <!-- info-body end -->
 
-
-      <% if(transaction.state == 'cancel') { %>
       <div class="info-head">
         <div class="alert alert-danger" role="alert">
           본 거래는 취소된 거래입니다.
@@ -402,11 +400,11 @@
           <tbody>
             <tr>
               <th class="buyer-info-list">구매자</th>
-              <td id="buyer-name"><%=transaction.buyer.name%></td>
+              <td id="buyer-name">Mark</td>
             </tr>
             <tr>
               <th class="buyer-info-list">구매일자</th>
-              <td id="buyer-buydate"><%=transaction.createdAt%></td>
+              <td id="buyer-buydate">2019/09/15</td>
             </tr>
             <tr>
               <th class="buyer-info-list">취소사유</th>
@@ -414,11 +412,11 @@
             </tr>
             <tr>
               <th class="buyer-info-list">취소일자</th>
-              <td id="buyer-canceldate"><%=transaction.updatedAt%></td>
+              <td id="buyer-canceldate">2019/09/16</td>
             </tr>
             <tr>
               <th class="buyer-info-list">취소번호</th>
-              <td id="buyer-canceldate"><%=transaction._id%></td>
+              <td id="buyer-canceldate">2019091612345</td>
             </tr>
             <tr>
               <td><br></td>
@@ -427,7 +425,9 @@
           </tbody>
         </table>
       </div> <!-- info-body end -->
-      <% } %>
+
+      
+
     </div> <!-- mySalesdetails end -->
   </div> <!-- info-container end -->
 </div> <!-- container end -->

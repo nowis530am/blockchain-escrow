@@ -112,7 +112,7 @@ router.get("/wallet", async function(req, res, next) {
 });
 
 router.get("/saleslist", async function(req, res, next) {
-  let user, products;
+  let user, products, transactions;
 
   if (!req.session.email) {
     res.redirect("/account/login");
@@ -125,7 +125,11 @@ router.get("/saleslist", async function(req, res, next) {
   };
 
   user = await User.findOne({ email: req.session.email });
-  products = await Product.find({ user: user._id }).sort({ createdAt: -1 });
+  transactions = await Transaction.find({ seller: user._id })
+    .sort({ createdAt: -1 })
+    .populate("buyer")
+    .populate("seller")
+    .populate("product");
 
   // let newProducts = products.map((item1, key1) => {
   //   products.map((item2, key2) => {
@@ -134,12 +138,12 @@ router.get("/saleslist", async function(req, res, next) {
   // });
   // console.log(products);
   const groupByCreatedAt = groupBy("createdAt");
-  products = groupByCreatedAt(products);
+  transactions = groupByCreatedAt(transactions);
 
   // console.log(groupByCreatedAt(products));
 
   // console.log(products);
-  res.render("saleslist", { req, products });
+  res.render("saleslist", { req, transactions });
 });
 
 const groupBy = key => array =>
@@ -151,6 +155,9 @@ const groupBy = key => array =>
   }, {});
 
 
+/**
+ * 구매 리스트
+ */
 router.get("/purchaselist", async function(req, res, next) {
   let user, products, transactions;
 
@@ -178,8 +185,16 @@ router.get("/purchaselist", async function(req, res, next) {
   res.render("purchaselist", { req, transactions });
 });
 
+/**
+ * 판매 상세
+ */
 router.get("/sales_details/:_id", async function(req, res, next) {
   let product, transaction;
+
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
 
   res.locals = {
     title: "판매 상세",
@@ -201,6 +216,11 @@ router.get("/sales_details/:_id", async function(req, res, next) {
  */
 router.get("/purchase_details/:_id", async function(req, res, next) {
   let product, transaction;
+
+  if (!req.session.email) {
+    res.redirect("/account/login");
+    return;
+  }
 
   res.locals = {
     title: "주문 상세",

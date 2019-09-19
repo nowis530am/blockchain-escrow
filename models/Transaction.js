@@ -18,6 +18,9 @@ const TransactionSchema = new Schema(
     state: {
       type: String,
       default: "start",
+    },
+    inputNumber: {
+      type: Number
     }
   },
   {

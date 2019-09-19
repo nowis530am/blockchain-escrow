@@ -132,7 +132,7 @@
         Sales List
       </div>
       <div class="info-body">
-          <% for(var date in products) {%>
+          <% for(var date in transactions) {%>
             <!-- listbox includes "date, item list". It can be added. -->
             <div class="listbox">
                 <div class="sales-info">
@@ -151,24 +151,54 @@
                       +) Pending Shipment: 배송 대기
                       +) Cancelled: 주문 취소
                 -->
-                <% products[date].forEach(function(product) { %>
+                <% transactions[date].forEach(function(transaction) { %>
                 <div class="item">
-                  <a href="/product_details/<%=product._id%>">
-                    <img id="item-img" src="<%= (product.images.length>0) ? product.images[0] : '' %>" alt="product_img">
+                  <a href="/product_details/<%=transaction.product._id%>">
+                    <img id="item-img" src="<%= (transaction.product.images.length>0) ? product.images[0] : '' %>" alt="product_img">
                   </a>
                   <div class="item-content">
                     <span class="itme-title">
-                      <a href="/product_details/<%=product._id%>"><%=product.title%></a>
+                      <a href="/product_details/<%=transaction.product._id%>"><%=transaction.product.title%></a>
                     </span>
                     <span class="item-price">
-                      <%=product.price%> ETH
+                      <%=transaction.product.price%> ETH
                     </span>
                   </div>
                   <div class="sales-status">
                     <!-- 판매 중 -->
-                    <span id="status">On sale</span>
+                    <!-- 판매 중 -->
+                    <span id="status">
+                        <% 
+                        switch(transaction.state) {
+                          case 'start':
+                        %>
+                        -
+                        <%
+                          break;
+                          case 'processing':
+                        %>
+                        <span class="text-info">
+                          구매진행중
+                        </span>
+                        <%
+                          break;
+                          case 'cancel':
+                        %>
+                        <span class="text-danger">거래취소됨</span>
+                        <%
+                          break;
+                          case 'success':
+                        %>
+                        <span class="text-success">
+                          거래확정
+                        </span>
+                        <%
+                          break;
+                        }
+                        %>
+                      </span>
                     <p>
-                      <a href="sales_details/<%=product._id%>">
+                      <a href="sales_details/<%=transaction.product._id%>">
                         <button class="btn btn-info btn-sm" type="button" name="button">Details</button>
                       </a>
                     </p>

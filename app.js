@@ -4,7 +4,9 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import session from "express-session";
+const MongoStore = require('connect-mongo')(session);
 import expressLayouts from "express-ejs-layouts";
+import mongoose from "./config/database";
 
 var indexRouter = require("./routes/index");
 var accountRouter = require("./routes/account");
@@ -23,15 +25,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(session({
+  secret: "blockchain-web secret key",
+  store: new MongoStore({ mongooseConnection: mongoose.conn }),
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 // session 사용
-app.use(
-  session({
-    secret: "blockchain-web secret key",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  })
-);
+// app.use(
+//   session({
+//     secret: "blockchain-web secret key",
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+//   })
+// );
 
 // layout 사용
 app.use(expressLayouts);
@@ -43,14 +53,14 @@ app.use("/web3", web3Router);
 app.use("/api", apiRouter);
 app.use("/", indexRouter);
 
-// catch 404 and forward to error handler
+// 404에러를 eror handler로 
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// error 핸들러
 app.use(function(err, req, res, next) {
-  // render the error page
+  // error page 렌더링
   res.status(err.status || 500);
 
   if(req.path.includes("/web3")) {
@@ -60,7 +70,7 @@ app.use(function(err, req, res, next) {
       message: err.message
     });
   } else {
-    // set locals, only providing error in development
+    // development 환경에서만 error 출력
     res.locals = {
       title: "Error - " + err.status || 500,
       req: req,
