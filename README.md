@@ -42,6 +42,24 @@ cp .env.example .env
 npm run dev
 ```
 
+### Geth(Go-Ethereum)
+```
+geth --datadir test-data init genesis.json
+```
+
+```
+geth --rpc --ipcpath private-network/test-net/test.ipc --rpcaddr "0.0.0.0" --rpcvhosts "*" --rpccorsdomain "*" --rpcport "8545" --datadir private-network/test-data --networkid 1234 --allow-insecure-unlock --rpcapi web3,personal,eth,net,db,http --ws --wsaddr 0.0.0.0 --wsorigins '*' --wsapi web3,personal,eth,net,db,http --unlock '0,1,2,3'
+```
+
+```
+geth attach private-network/test-net/test.ipc
+geth account new --datadir private-network/test-data/
+```
+
+```
+/Applications/Mist.app/Contents/MacOS/Mist --rpc private-network/test-net/test.ipc
+```
+
 ## 2. SmartContract
 스마트컨트랙트 코드는 ```./escrow.sol``` 에 위치해 있습니다.
 
