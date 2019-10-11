@@ -53,23 +53,21 @@
 <!-- Begin page content -->
 <div class="container">
   <!-- Carousel: main-banner -->
-  <div id="carousel-main-banner" class="carousel slide" data-ride="carousel">
+  <div id="carousel-main-banner" class="carousel slide" data-ride="carousel" style="height:500px">
     <ol class="carousel-indicators">
       <li data-target="#carousel-main-banner" data-slide-to="0" class="active"></li>
       <li data-target="#carousel-main-banner" data-slide-to="1"></li>
       <li data-target="#carousel-main-banner" data-slide-to="2"></li>
     </ol>
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <!-- 이미지는 1140px * 500px, <img src..> 부분이 <img data-src...> 였음.-->
-        <img src="img/Carousel_First_slide.jpg" alt="First slide" />
-      </div>
-      <div class="item">
-        <img src="img/Carousel_Second_slide.jpg" alt="Second slide" />
-      </div>
-      <div class="item">
-        <img src="img/Carousel_Third_slide.jpg" alt="Third slide" />
-      </div>
+    <div class="carousel-inner" role="listbox" style="height:500px">
+      <% for(var i = 0; i < 5; i++) { %>
+        <% if(products[i]) { %>
+        <div class="item <% if(i == 0) { %>active<% } %>">
+          <!-- 이미지는 1140px * 500px, <img src..> 부분이 <img data-src...> 였음.-->
+          <img src="<%=products[i].images[0]%>" alt="First slide" />
+        </div>
+        <% } %>
+      <% } %>
     </div>
     <a class="left carousel-control" href="#carousel-main-banner" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -98,7 +96,7 @@
             <p><%=products[i].content%></p>
             <div class="price">
               <h2><%=products[i].price%></h2>
-              <h4>&nbsp;원</h4>
+              <h4>&nbsp;ETH</h4>
             </div>
           </div>
         </a>
@@ -248,156 +246,64 @@
     <h1>Popular item</h1>
   </div>
 
-  <!-- Carousel: popular-item -->
   <div id="carousel-popular-item" class="carousel slide">
     <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <div class="row display-flex">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_1.jpg" alt="Thumbnail 1" />
-                <div class="caption">
-                  <h3>Thumbnail label 1</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>100.00</h2>
-                    <h4>&nbsp;$</h4>
+
+    <% for(var i = 0; i < products.length; i=i+3) { %>
+      <div class="item <% if(i == 0) { %>active<% } %>">
+          <div class="row display-flex">
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <a href="/product_details/<%=products[i]._id%>">
+                  <img src="<%=products[i].images[0]%>" alt="Thumbnail 1" />
+                  <div class="caption">
+                    <h3><%=products[i].title%></h3>
+                    <p><%=products[i].content%></p>
+                    <div class="price">
+                      <h2><%=products[i].price%></h2>
+                      <h4>&nbsp;ETH</h4>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_2.jpg" alt="Thumbnail 2" />
-                <div class="caption">
-                  <h3>Thumbnail label 2</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>200.00</h2>
-                    <h4>&nbsp;$</h4>
+            <% if(products[i+1]) { %>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <a href="/product_details/<%=products[i+1]._id%>">
+                  <img src="<%=products[i+1].images[0]%>" alt="Thumbnail 1" />
+                  <div class="caption">
+                    <h3><%=products[i+1].title%></h3>
+                    <p><%=products[i+1].content%></p>
+                    <div class="price">
+                      <h2><%=products[i+1].price%></h2>
+                      <h4>&nbsp;ETH</h4>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_3.jpg" alt="Thumbnail 3" />
-                <div class="caption">
-                  <h3>Thumbnail label 3</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>300.00</h2>
-                    <h4>&nbsp;$</h4>
+            <% } %>
+            <% if(products[i+2]) { %>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <a href="/product_details/<%=products[i+2]._id%>">
+                  <img src="<%=products[i+2].images[0]%>" alt="Thumbnail 1" />
+                  <div class="caption">
+                    <h3><%=products[i+2].title%></h3>
+                    <p><%=products[i+2].content%></p>
+                    <div class="price">
+                      <h2><%=products[i+2].price%></h2>
+                      <h4>&nbsp;ETH</h4>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="row display-flex">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_4.jpg" alt="Thumbnail 4" />
-                <div class="caption">
-                  <h3>Thumbnail label 4</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>400.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_5.jpg" alt="Thumbnail 5" />
-                <div class="caption">
-                  <h3>Thumbnail label 5</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>500.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_6.jpg" alt="Thumbnail 6" />
-                <div class="caption">
-                  <h3>Thumbnail label 6</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>600.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
+            <% } %>
           </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="row display-flex">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_7.jpg" alt="Thumbnail 7" />
-                <div class="caption">
-                  <h3>Thumbnail label 7</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>700.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_8.jpg" alt="Thumbnail 8" />
-                <div class="caption">
-                  <h3>Thumbnail label 8</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>800.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <a href="product_details">
-                <img src="img/thumbnail_9.jpg" alt="Thumbnail 9" />
-                <div class="caption">
-                  <h3>Thumbnail label 9</h3>
-                  <p>This item is for sale.</p>
-                  <div class="price">
-                    <h2>900.00</h2>
-                    <h4>&nbsp;$</h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <% } %>
     </div>
     <a class="left carousel-control" href="#carousel-popular-item" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>

@@ -306,7 +306,7 @@
                 <br><br>
                 <!-- Button trigger modal -->
                 <!-- 물품 결제 버튼 >>> 알림 창 Trigger -->
-                <% if(transaction.state == 'cancel') { %>
+                <% if(transaction.state == 'cancel' || transaction.state != 'shipping' || transaction.state != 'complete') { %>
                 <button disabled type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#paymentModal">
                   <span><b>물품 결제</b></span>
                 </button>
@@ -346,12 +346,12 @@
 
                 <!-- Button trigger modal -->
                 <!-- 구매 취소 버튼 >>> 알림 창 Trigger -->
-                <% if(transaction.state == 'cancel') { %>
+                <% if(transaction.state == 'cancel' || transaction.state == 'shipping' || transaction.state == 'success') { %>
                 <button disabled type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#cancelModal">
                   <span><b>구매 취소</b></span>
                 </button>
                 <% } else { %>
-                <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#cancelModal">
+                <button  type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#cancelModal">
                   <span><b>구매 취소</b></span>
                 </button>
                 <% } %>
@@ -443,13 +443,44 @@
                 <!-- 구매 확정 버튼 >>> 알림 창 Trigger -->
                 <% if(transaction.state == 'shipping') { %>
                 <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#confirmModal">
-                  <span><b>구매 확정</b></span>
+                  <span><b>구매 확정 <span class="leftTimes">99분 99초 남음</span></b></span>
                 </button>
                 <% } else { %>
-                <button disabled type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#confirmModal">
-                  <span><b>구매 확정</b></span>
+                <button disabled type="button" class="btn btn-lg btn-primary btn-confirm" data-toggle="modal" data-target="#confirmModal">
+                  <span><b>구매 확정 <span class="leftTimes">99분 99초 남음</span></b></span>
                 </button>
                 <% } %>
+
+                <script>
+                  function liftOff() {
+                    $.ajax({
+                      url: "/api/purchase_scam",
+                      type: "post",
+                      dataType: "json",
+                      data: {
+                        productId: "<%=product._id%>"
+                      },
+                      beforeSend: function(xhr) {
+                        $('#btn-confirm').text("구매확정을 누르지 않았으므로 판매자에게 보증금이 돌아갑니다.");
+                      },
+                      success: function (data) {
+                        $('#btn-confirm').text("완료");
+                        location.reload();
+                      },
+                      fail: function () {
+                        alert("Error");
+                      }
+                    });
+                  }
+                  function watchCountDown(periods) {
+                    $('.leftTimes').text(periods[6] + " 초 남음")
+                  }
+                  var timestamp = new Date().getTime() - 15;
+                  $('.leftTimes').countdown({until: 15, format: 's', onExpiry: liftOff, onTick: watchCountDown });
+                  // setInterval(function() {
+                  //   $('.leftTimes').text(new Date(timestamp).for);
+                  // }, 1000);  
+                </script>
 
                 <!-- Modal -->
                 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">

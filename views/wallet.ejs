@@ -132,7 +132,13 @@
         <!-- 지갑주소 -->
         <span class="info-list">
           <li>Wallet Address: <br></li>
-          <span class="info-list-content" id="walletAddress"><%=user.account.address%></span>
+          <span class="info-list-content" id="walletAddress">
+            <% if(!user.account.address) { %>
+              지갑 주소가 없습니다. 새로 생성해주세요.
+            <% } else { %>
+              <%=user.account.address%>
+            <% } %>
+          </span>
         </span>
 
         <!-- Button trigger modal -->

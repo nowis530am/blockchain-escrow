@@ -64,36 +64,32 @@ var subscription = web3.eth
 /**
  * 프로필 업데이트 
  */
-router.post(
-  "/profile_update",
-  upload.fields([{ name: "image" }]),
-  async function(req, res, next) {
-    // 변수 미리 설정
-    let body, user;
-    body = req.body;
+router.post("/profile_update", upload.fields([{ name: "image" }]), async function(req, res, next) {
+  // 변수 미리 설정
+  let body, user;
+  body = req.body;
 
-    // 로그인 여부 확인
-    if (!req.session.email) {
-      res.json({ message: "로그인 해주세요." });
-      return;
-    }
-
-    // 데이터 업데이트
-    user = await User.findOne({ email: req.session.email });
-    user.name = body.name;
-    user.phone = body.phone;
-    user.email = body.email;
-    user.address = body.address;
-    user.zipCode = body.zipCode;
-    if (req.files.image) {
-      user.profileImagePath = "/uploads/" + req.files.image[0].filename;
-    }
-    await user.save();
-
-    // response
-    res.json({ message: "업데이트 완료" });
+  // 로그인 여부 확인
+  if (!req.session.email) {
+    res.json({ message: "로그인 해주세요." });
+    return;
   }
-);
+
+  // 데이터 업데이트
+  user = await User.findOne({ email: req.session.email });
+  user.name = body.name;
+  user.phone = body.phone;
+  user.email = body.email;
+  user.address = body.address;
+  user.zipCode = body.zipCode;
+  if (req.files.image) {
+    user.profileImagePath = "/uploads/" + req.files.image[0].filename;
+  }
+  await user.save();
+
+  // response
+  res.json({ message: "업데이트 완료" });
+});
 
 /**
  * 잔액 확인
@@ -113,10 +109,7 @@ router.get("/balance", async function(req, res, next) {
   user = await User.findOne({ email: req.session.email });
   address = user.account.address;
   // 잔액가져오기. 단위: ether
-  balance = await web3.utils.fromWei(
-    await web3.eth.getBalance(address),
-    "ether"
-  );
+  balance = await web3.utils.fromWei(await web3.eth.getBalance(address), "ether");
   // 000 세개 마다 , 찍기
   balance = parseFloat(balance).toLocaleString();
 
@@ -172,11 +165,7 @@ router.post("/send_money", async function(req, res, next) {
     user = await User.findOne({ email: req.session.email });
 
     // 계정 lock 해제
-    await web3.eth.personal.unlockAccount(
-      user.account.address,
-      user.account.privateKey,
-      600
-    );
+    await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
 
     // ether 전송
     result = await web3.eth.sendTransaction({
@@ -208,34 +197,37 @@ router.get("/get_transaction_history", async function(req, res, next) {
   body = req.body;
   user = await User.findOne({ email: req.session.email });
   console.log(user.account.address);
-  
+
   try {
     result = await BlockTransaction.find({
-      $or : [{
-        from: {
-          "$regex" : user.account.address, 
-          "$options" : "i"
+      $or: [
+        {
+          from: {
+            $regex: user.account.address,
+            $options: "i"
+          }
+        },
+        {
+          to: {
+            $regex: user.account.address,
+            $options: "i"
+          }
         }
-      }, {
-        to: {
-          "$regex" : user.account.address, 
-          "$options" : "i"
-        }
-      }]
-    }).sort({createdAt: -1});
+      ]
+    }).sort({ createdAt: -1 });
 
-    const mappingFunction = (result) => {
-      const promises = result.map(async (item) => {
+    const mappingFunction = result => {
+      const promises = result.map(async item => {
         item.value = web3.utils.fromWei(item.value, "ether");
-        if("0" == item.value) {
+        if ("0" == item.value) {
           return;
         }
         //출금
-        if(user.account.address == item.to) {
+        if (user.account.address == item.to) {
           item.user = await User.findOne({
             "account.address": item.from
           });
-        //입금
+          //입금
         } else {
           item.user = await User.findOne({
             "account.address": item.to
@@ -244,7 +236,7 @@ router.get("/get_transaction_history", async function(req, res, next) {
         return item;
       });
       return Promise.all(promises);
-    }
+    };
 
     result = await mappingFunction(result);
     // result = await getTransactionsByAccount(user.account.address);
@@ -261,12 +253,8 @@ router.get("/get_transaction_history", async function(req, res, next) {
   }
 });
 
-// 블록 검색하여 입출금 트랜잭션 가져오기 
-async function getTransactionsByAccount(
-  myaccount,
-  startBlockNumber,
-  endBlockNumber
-) {
+// 블록 검색하여 입출금 트랜잭션 가져오기
+async function getTransactionsByAccount(myaccount, startBlockNumber, endBlockNumber) {
   let result = [];
   if (endBlockNumber == null) {
     endBlockNumber = await web3.eth.getBlockNumber();
@@ -295,12 +283,11 @@ async function getTransactionsByAccount(
       await block.transactions.forEach(async function(e) {
         // console.log(e.from + " - " + myaccount);
         if (myaccount == "*" || myaccount == e.from.toLowerCase() || myaccount == e.to.toLowerCase()) {
-          if(e.value == 0) {
+          if (e.value == 0) {
             //스마트 컨트랙트
-            product = await Product.findOne({contractAddress: e.to}).populate('user');
+            product = await Product.findOne({ contractAddress: e.to }).populate("user");
             e.product = product;
-            if(!product)
-              return;
+            if (!product) return;
           } else {
             //입출금
             e.fromUser = await User.findOne({ _id: e.from });
@@ -360,20 +347,9 @@ async function getTransactionsByAccount(
 /**
  * 물품 등록
  */
-router.post("/product_reg", upload.fields([{ name: "image" }]), async function(
-  req,
-  res,
-  next
-) {
+router.post("/product_reg", upload.fields([{ name: "image" }]), async function(req, res, next) {
   // 변수 미리 설정
-  let body,
-    escrowContract,
-    address,
-    balance,
-    result,
-    user,
-    product,
-    transaction;
+  let body, escrowContract, address, balance, result, user, product, transaction;
   body = req.body;
 
   try {
@@ -385,22 +361,15 @@ router.post("/product_reg", upload.fields([{ name: "image" }]), async function(
 
     // DB에서 미리 데이터 뽑아오기
     user = await User.findOne({ email: req.session.email });
-    balance = await web3.utils.fromWei(
-      await web3.eth.getBalance(user.account.address),
-      "ether"
-    );
-    await web3.eth.personal.unlockAccount(
-      user.account.address,
-      user.account.privateKey,
-      600
-    );
+    balance = await web3.utils.fromWei(await web3.eth.getBalance(user.account.address), "ether");
+    await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
 
     // 물품 등록과 동시에 컨트랙트 deploy
     escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI);
     result = await escrowContract
       .deploy({
         data: config.contracts.escrow.BYTECODE,
-        arguments: [body.price] //생성자 params => uint _price
+        arguments: [web3.utils.toWei(String(body.price), "ether")] //생성자 params => uint _price
       })
       .send({
         from: user.account.address,
@@ -443,15 +412,7 @@ router.post("/product_reg", upload.fields([{ name: "image" }]), async function(
  */
 router.post("/purchase_request", async function(req, res, next) {
   // 변수들 미리 세팅
-  let result,
-    buyer,
-    seller,
-    escrowContract,
-    transaction,
-    body,
-    product,
-    address,
-    balance;
+  let result, buyer, seller, escrowContract, transaction, body, product, address, balance;
   body = req.body;
 
   // 로그인 되었는지 체크
@@ -484,10 +445,7 @@ router.post("/purchase_request", async function(req, res, next) {
     }
 
     // 잔액조회
-    balance = await web3.utils.fromWei(
-      await web3.eth.getBalance(buyer.account.address),
-      "ether"
-    );
+    balance = await web3.utils.fromWei(await web3.eth.getBalance(buyer.account.address), "ether");
     if (balance < product.price * 2) {
       res.json({
         success: false,
@@ -497,21 +455,14 @@ router.post("/purchase_request", async function(req, res, next) {
     }
 
     // 계정잠금해제
-    await web3.eth.personal.unlockAccount(
-      buyer.account.address,
-      buyer.account.privateKey,
-      600
-    );
+    await web3.eth.personal.unlockAccount(buyer.account.address, buyer.account.privateKey, 600);
     // 물품의 스마트 컨트랙트
-    escrowContract = new web3.eth.Contract(
-      config.contracts.escrow.ABI,
-      body.contractAddress
-    );
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, body.contractAddress);
 
     // 구매요청함수 호출
     result = await escrowContract.methods.purchase_request().send({
       from: buyer.account.address,
-      value: product.price * 2
+      value: web3.utils.toWei(String(product.price * 2), "ether")
     });
 
     console.log(result);
@@ -543,15 +494,7 @@ router.post("/purchase_request", async function(req, res, next) {
  */
 router.post("/input_number", async function(req, res, next) {
   // 변수들 미리 세팅
-  let result,
-    buyer,
-    seller,
-    escrowContract,
-    transaction,
-    body,
-    product,
-    address,
-    balance;
+  let result, buyer, seller, escrowContract, transaction, body, product, address, balance;
   body = req.body;
 
   // 로그인 되었는지 체크
@@ -568,16 +511,9 @@ router.post("/input_number", async function(req, res, next) {
 
     console.log(seller);
     // 계정잠금해제
-    await web3.eth.personal.unlockAccount(
-      seller.account.address,
-      seller.account.privateKey,
-      600
-    );
+    await web3.eth.personal.unlockAccount(seller.account.address, seller.account.privateKey, 600);
     // 물품의 스마트 컨트랙트
-    escrowContract = new web3.eth.Contract(
-      config.contracts.escrow.ABI,
-      product.contractAddress
-    );
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, product.contractAddress);
 
     // 운송장 입력 함수 호출
     result = await escrowContract.methods.input_number(body.inputNumber).send({
@@ -613,15 +549,7 @@ router.post("/input_number", async function(req, res, next) {
  */
 router.post("/purchase_confirm", async function(req, res, next) {
   // 변수들 미리 세팅
-  let result,
-    buyer,
-    seller,
-    escrowContract,
-    transaction,
-    body,
-    product,
-    address,
-    balance;
+  let result, buyer, seller, escrowContract, transaction, body, product, address, balance;
   body = req.body;
 
   // 로그인 되었는지 체크
@@ -633,29 +561,39 @@ router.post("/purchase_confirm", async function(req, res, next) {
   try {
     // DB에서 정보 미리 읽어옴
     product = await Product.findOne({ _id: body.productId });
+    seller = await User.findOne({ _id: product.user });
     buyer = await User.findOne({ email: req.session.email });
     transaction = await Transaction.findOne({ product: body.productId });
 
     // 계정잠금해제
-    await web3.eth.personal.unlockAccount(
-      buyer.account.address,
-      buyer.account.privateKey,
-      600
-    );
+    await web3.eth.personal.unlockAccount(buyer.account.address, buyer.account.privateKey, 600);
     // 물품의 스마트 컨트랙트
-    escrowContract = new web3.eth.Contract(
-      config.contracts.escrow.ABI,
-      product.contractAddress
-    );
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, product.contractAddress);
 
     // 구매 확정 함수 호출
-    result = await escrowContract.methods
-      .buyer_receive(transaction.inputNumber)
-      .send({
-        from: buyer.account.address
-      });
+    result = await escrowContract.methods.buyer_receive(transaction.inputNumber).send({
+      from: buyer.account.address
+    });
 
     console.log(result);
+
+    // 구매자, 판매자 페이백 기록
+    // let transaction = await web3.eth.getTransaction(txId);
+    let blockTransaction = new BlockTransaction();
+    // blockTransaction.hash = transaction.hash
+    blockTransaction.from = product.contractAddress;
+    blockTransaction.to = buyer.account.address;
+    blockTransaction.value = String(web3.utils.toWei(String(product.price), "ether"));
+    await blockTransaction.save();
+
+    //판매자 입금기록
+    // let transaction = await web3.eth.getTransaction(txId);
+    blockTransaction = new BlockTransaction();
+    // blockTransaction.hash = transaction.hash
+    blockTransaction.from = product.contractAddress;
+    blockTransaction.to = seller.account.address;
+    blockTransaction.value = String(web3.utils.toWei(String(product.price), "ether"));
+    await blockTransaction.save();
 
     // 여기서부터 구매 확정 성공
     // 물품 거래내역 db 업데이트
@@ -683,14 +621,7 @@ router.post("/purchase_confirm", async function(req, res, next) {
  */
 router.post("/purchase_cancel", async function(req, res, next) {
   // 변수들 미리 세팅
-  let result,
-    user,
-    escrowContract,
-    transaction,
-    body,
-    product,
-    address,
-    balance;
+  let result, user, escrowContract, transaction, body, product, address, balance;
   body = req.body;
 
   // 로그인 되었는지 체크
@@ -706,19 +637,74 @@ router.post("/purchase_cancel", async function(req, res, next) {
     transaction = await Transaction.findOne({ product: body.productId });
 
     // 계정잠금해제
-    await web3.eth.personal.unlockAccount(
-      user.account.address,
-      user.account.privateKey,
-      600
-    );
+    await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
     // 물품의 스마트 컨트랙트
-    escrowContract = new web3.eth.Contract(
-      config.contracts.escrow.ABI,
-      product.contractAddress
-    );
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, product.contractAddress);
 
     // 구매 취소 함수 호출
     result = await escrowContract.methods.transact_cancel().send({
+      from: user.account.address
+    });
+
+    let blockTransaction = new BlockTransaction();
+    // blockTransaction.hash = transaction.hash;
+    blockTransaction.from = product.contractAddress;
+    blockTransaction.to = user.account.address;
+    blockTransaction.value = String(web3.utils.toWei(String(product.price * 2), "ether"));
+    await blockTransaction.save();
+
+    console.log(result);
+
+    // 여기서부터 구매 취소 성공
+    // 물품 거래내역 db 업데이트
+    // 물품 상태 구매취소로 변경
+    transaction.state = "cancel";
+    await transaction.save();
+
+    // 결과 response
+    res.json({
+      success: true,
+      message: "구매취소가 완료되었습니다."
+    });
+  } catch (e) {
+    console.log(e);
+
+    res.json({
+      success: false,
+      message: "에러발생: " + e
+    });
+  }
+});
+
+
+/**
+ * 구매자 구매 사기
+ */
+router.post("/purchase_scam", async function(req, res, next) {
+  // 변수들 미리 세팅
+  let result, user, seller, escrowContract, transaction, body, product, address, balance;
+  body = req.body;
+
+  // 로그인 되었는지 체크
+  if (!req.session.email) {
+    res.json({ success: false, message: "로그인 해주세요." });
+    return;
+  }
+
+  try {
+    // DB에서 정보 미리 읽어옴
+    product = await Product.findOne({ _id: body.productId });
+    user = await User.findOne({ email: req.session.email });
+    seller = await User.findOne({ _id: product.user });
+    transaction = await Transaction.findOne({ product: body.productId });
+
+    // 계정잠금해제
+    await web3.eth.personal.unlockAccount(user.account.address, user.account.privateKey, 600);
+    // 물품의 스마트 컨트랙트
+    escrowContract = new web3.eth.Contract(config.contracts.escrow.ABI, product.contractAddress);
+
+    // 구매 사기 함수 호출
+    result = await escrowContract.methods.transact_scam().send({
       from: user.account.address
     });
 
@@ -729,6 +715,13 @@ router.post("/purchase_cancel", async function(req, res, next) {
     // 물품 상태 구매취소로 변경
     transaction.state = "cancel";
     await transaction.save();
+
+    let blockTransaction = new BlockTransaction();
+    // blockTransaction.hash = transaction.hash;
+    blockTransaction.from = product.contractAddress;
+    blockTransaction.to = seller.account.address;
+    blockTransaction.value = String(web3.utils.toWei(String(product.price * 2), "ether"));
+    await blockTransaction.save();
 
     // 결과 response
     res.json({
